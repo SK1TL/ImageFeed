@@ -14,4 +14,10 @@ final class ImagesListCell: UITableViewCell {
     @IBOutlet var likeButton: UIButton!
     @IBOutlet var dateLabel: UILabel!
     @IBOutlet var cellImage: UIImageView!
+    
+    func configure(isLiked: Bool, date: String, image: UIImage) {
+        likeButton.setImage(isLiked ? UIImage(named: "Active") : UIImage(named: "No Active"), for: .normal)
+        dateLabel.text = date
+        cellImage.image = image
+    }
 }

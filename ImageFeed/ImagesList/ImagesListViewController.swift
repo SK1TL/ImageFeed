@@ -8,16 +8,11 @@
 import UIKit
 import Foundation
 
-class ImagesListViewController: UIViewController {
+final class ImagesListViewController: UIViewController {
     
     @IBOutlet private var tableView: UITableView!
     
     private let photosName: [String] = Array(0..<21).map{ "\($0)" }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        tableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
-    }
     
     private lazy var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -25,6 +20,11 @@ class ImagesListViewController: UIViewController {
         formatter.timeStyle = .none
         return formatter
     }()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        tableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
+    }
 }
 
 extension ImagesListViewController: UITableViewDataSource {
@@ -33,13 +33,17 @@ extension ImagesListViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: ImagesListCell.reuseIdentifier, for: indexPath)
         
-        cell.selectionStyle = .none
-        
-        guard let imageListCell = cell as? ImagesListCell else {
+        guard
+            let imageListCell = tableView.dequeueReusableCell(
+                withIdentifier: ImagesListCell.reuseIdentifier,
+                for: indexPath
+            ) as? ImagesListCell
+        else {
             return UITableViewCell()
         }
+        
+        imageListCell.selectionStyle = .none
         
         configCell(for: imageListCell, with: indexPath)
         
@@ -53,12 +57,11 @@ extension ImagesListViewController {
             return
         }
         
-        cell.cellImage.image = image
-        cell.dateLabel.text = dateFormatter.string(from: Date())
-        
-        let isLiked = indexPath.row % 2 == 0
-        let likeImage = isLiked ? UIImage(named: "Active") : UIImage(named: "No Active")
-        cell.likeButton.setImage(likeImage, for: .normal)
+        cell.configure(
+            isLiked: indexPath.row % 2 == 0, 
+            date: dateFormatter.string(from: Date()),
+            image: image
+        )
     }
 }
 
@@ -69,6 +72,7 @@ extension ImagesListViewController: UITableViewDelegate {
         guard let image = UIImage(named: photosName[indexPath.row]) else {
             return 0
         }
+        
         let imageInsets = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)
         let imageViewWidth = tableView.bounds.width - imageInsets.left - imageInsets.right
         let imageWidth = image.size.width
