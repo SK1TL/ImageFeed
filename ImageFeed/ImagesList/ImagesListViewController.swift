@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import Foundation
 
 final class ImagesListViewController: UIViewController {
     
@@ -66,7 +65,6 @@ extension ImagesListViewController {
 }
 
 extension ImagesListViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {}
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         guard let image = UIImage(named: photosName[indexPath.row]) else {
