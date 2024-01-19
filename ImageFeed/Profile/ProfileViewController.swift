@@ -7,15 +7,15 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController {
+final class ProfileViewController: UIViewController {
     
-    @IBOutlet weak var descriptionLabel: UILabel!
-    @IBOutlet weak var loginNameLabel: UILabel!
-    @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var logoutButton: UIButton!
-    @IBOutlet weak var avatarImageView: UIImageView!
+    @IBOutlet private var descriptionLabel: UILabel!
+    @IBOutlet private var loginNameLabel: UILabel!
+    @IBOutlet private var nameLabel: UILabel!
+    @IBOutlet private var logoutButton: UIButton!
+    @IBOutlet private var avatarImageView: UIImageView!
     
     
-    @IBAction func didTapLogoutButton() {
+    @IBAction private func didTapLogoutButton() {
     }
 }
