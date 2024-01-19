@@ -101,10 +101,10 @@
             </objects>
             <point key="canvasLocation" x="69" y="-2"/>
         </scene>
-        <!--View Controller-->
+        <!--Profile View Controller-->
         <scene sceneID="swl-0v-Lvv">
             <objects>
-                <viewController id="4qd-Zk-fFH" sceneMemberID="viewController">
+                <viewController id="4qd-Zk-fFH" customClass="ProfileViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Bbi-Zp-PGk">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -128,10 +128,13 @@
                                 <color key="textColor" name="YP White"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5wv-zz-04y" userLabel="Logout Bottom">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5wv-zz-04y" userLabel="Logout Buttom">
                                 <rect key="frame" x="321" y="114" width="48" height="38"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" image="Exit" title=""/>
+                                <connections>
+                                    <action selector="didTapLogoutButton:" destination="4qd-Zk-fFH" eventType="touchUpInside" id="x7W-s5-k85"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="@ekaterina_nov" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Ju-oD-kTV" userLabel="Login Name Label">
                                 <rect key="frame" x="16" y="204" width="361" height="15.333333333333343"/>
@@ -165,6 +168,13 @@
                             <constraint firstItem="3Ju-oD-kTV" firstAttribute="top" secondItem="e7k-wF-9Fk" secondAttribute="bottom" constant="8" id="y17-5T-yfM"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="avatarImageView" destination="GeU-fx-ZMq" id="iB6-YI-bbo"/>
+                        <outlet property="descriptionLabel" destination="Inp-rY-ZbU" id="GNE-JD-Eyh"/>
+                        <outlet property="loginNameLabel" destination="3Ju-oD-kTV" id="BZc-Au-DrD"/>
+                        <outlet property="logoutButton" destination="5wv-zz-04y" id="H9C-Kp-qp9"/>
+                        <outlet property="nameLabel" destination="e7k-wF-9Fk" id="eiS-EO-Zlv"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x3J-rg-OtF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
