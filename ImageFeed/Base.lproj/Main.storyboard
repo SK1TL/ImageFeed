@@ -36,7 +36,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="393" height="219"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="2yT-Al-HcP" userLabel="0">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="0" translatesAutoresizingMaskIntoConstraints="NO" id="2yT-Al-HcP" userLabel="0">
                                                     <rect key="frame" x="16" y="4" width="361" height="211"/>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -75,6 +75,7 @@
                                             <outlet property="cellImage" destination="2yT-Al-HcP" id="9jK-JD-cdm"/>
                                             <outlet property="dateLabel" destination="yO1-XI-2ot" id="AGl-0P-E9m"/>
                                             <outlet property="likeButton" destination="K8Z-tI-1AN" id="XfB-eL-K1g"/>
+                                            <segue destination="S8o-nz-AOj" kind="show" identifier="ShowSingleImage" id="cP4-af-5S4"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -227,8 +228,39 @@
             </objects>
             <point key="canvasLocation" x="-1306.1068702290077" y="-356.33802816901408"/>
         </scene>
+        <!--Single Image View Controller-->
+        <scene sceneID="wBC-az-OHM">
+            <objects>
+                <viewController id="S8o-nz-AOj" customClass="SingleImageViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="eiu-Ln-bx5">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="0" translatesAutoresizingMaskIntoConstraints="NO" id="r3a-Rh-wfL">
+                                <rect key="frame" x="0.0" y="103" width="393" height="666"/>
+                            </imageView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="Hbe-71-LCu"/>
+                        <color key="backgroundColor" name="YP Background"/>
+                        <constraints>
+                            <constraint firstItem="r3a-Rh-wfL" firstAttribute="trailing" secondItem="Hbe-71-LCu" secondAttribute="trailing" id="1i8-Om-6WR"/>
+                            <constraint firstItem="r3a-Rh-wfL" firstAttribute="leading" secondItem="Hbe-71-LCu" secondAttribute="leading" id="6sM-OH-2aF"/>
+                            <constraint firstItem="r3a-Rh-wfL" firstAttribute="top" secondItem="Hbe-71-LCu" secondAttribute="top" id="J2p-Br-qCL"/>
+                            <constraint firstItem="r3a-Rh-wfL" firstAttribute="bottom" secondItem="Hbe-71-LCu" secondAttribute="bottom" id="eVl-ov-7SI"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="4cE-ft-DIU"/>
+                    <connections>
+                        <outlet property="imageView" destination="r3a-Rh-wfL" id="tL8-jv-V88"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="JNT-Iv-ZwP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="484.73282442748092" y="-356.33802816901408"/>
+        </scene>
     </scenes>
     <resources>
+        <image name="0" width="200" height="132"/>
         <image name="Active" width="42" height="42"/>
         <image name="Exit" width="24" height="24"/>
         <image name="Photo" width="70" height="70"/>
