@@ -178,6 +178,9 @@
                                     <color key="titleColor" name="YP White"/>
                                 </state>
                                 <buttonConfiguration key="configuration" style="plain" image="Sharing"/>
+                                <connections>
+                                    <action selector="didTapShareButton:" destination="S8o-nz-AOj" eventType="touchUpInside" id="N6D-lw-iyR"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Hbe-71-LCu"/>
