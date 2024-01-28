@@ -15,7 +15,6 @@ final class ProfileViewController: UIViewController {
     @IBOutlet private var logoutButton: UIButton!
     @IBOutlet private var avatarImageView: UIImageView!
     
-    
     @IBAction private func didTapLogoutButton() {
     }
 }
