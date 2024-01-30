@@ -34,7 +34,7 @@ final class ProfileViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-
+    
     private lazy var descriptionLabel: UILabel = {
         let label = UILabel()
         label.text = "Hello world!"
@@ -43,7 +43,7 @@ final class ProfileViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-
+    
     private lazy var logoutButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "Exit"), for: .normal)
@@ -66,7 +66,6 @@ final class ProfileViewController: UIViewController {
         view.addSubview(loginLabel)
         view.addSubview(descriptionLabel)
         view.addSubview(logoutButton)
-
     }
     
     private func makeConstraints() {
@@ -78,13 +77,13 @@ final class ProfileViewController: UIViewController {
             
             userNameLabel.leadingAnchor.constraint(equalTo: imageView.leadingAnchor),
             userNameLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 8),
-
+            
             loginLabel.leadingAnchor.constraint(equalTo: userNameLabel.leadingAnchor),
             loginLabel.topAnchor.constraint(equalTo: userNameLabel.bottomAnchor, constant: 8),
-
+            
             descriptionLabel.leadingAnchor.constraint(equalTo: loginLabel.leadingAnchor),
             descriptionLabel.topAnchor.constraint(equalTo: loginLabel.bottomAnchor, constant: 8),
-
+            
             logoutButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
             logoutButton.centerYAnchor.constraint(equalTo: imageView.centerYAnchor)
         ])
@@ -92,5 +91,3 @@ final class ProfileViewController: UIViewController {
     
     @objc private func didTapLogoutButton() {}
 }
-
-
