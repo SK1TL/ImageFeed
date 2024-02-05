@@ -16,6 +16,7 @@
 		851A0B5E2B4AD373003E6D97 /* ImagesListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851A0B5D2B4AD373003E6D97 /* ImagesListCell.swift */; };
 		851A0B842B5AC478003E6D97 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851A0B832B5AC478003E6D97 /* ProfileViewController.swift */; };
 		851A0B862B5BDE9C003E6D97 /* SingleImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851A0B852B5BDE9C003E6D97 /* SingleImageViewController.swift */; };
+		853126D72B7147E7008589D5 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853126D62B7147E7008589D5 /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		851A0B5D2B4AD373003E6D97 /* ImagesListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListCell.swift; sourceTree = "<group>"; };
 		851A0B832B5AC478003E6D97 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		851A0B852B5BDE9C003E6D97 /* SingleImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleImageViewController.swift; sourceTree = "<group>"; };
+		853126D62B7147E7008589D5 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +64,7 @@
 		851A0B282B432371003E6D97 /* ImageFeed */ = {
 			isa = PBXGroup;
 			children = (
+				853126D62B7147E7008589D5 /* Constants.swift */,
 				851A0B292B432371003E6D97 /* AppDelegate.swift */,
 				851A0B2B2B432371003E6D97 /* SceneDelegate.swift */,
 				851A0B872B5BE24B003E6D97 /* SingleImageViewController */,
@@ -175,6 +178,7 @@
 				851A0B5E2B4AD373003E6D97 /* ImagesListCell.swift in Sources */,
 				851A0B842B5AC478003E6D97 /* ProfileViewController.swift in Sources */,
 				851A0B2A2B432371003E6D97 /* AppDelegate.swift in Sources */,
+				853126D72B7147E7008589D5 /* Constants.swift in Sources */,
 				851A0B862B5BDE9C003E6D97 /* SingleImageViewController.swift in Sources */,
 				851A0B2C2B432371003E6D97 /* SceneDelegate.swift in Sources */,
 			);
