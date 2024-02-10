@@ -8,7 +8,7 @@
 import Foundation
 
 struct ResponseBody: Decodable {
-    let accesToken: String
+    let accessToken: String
     let tokenType: String
     let scope: String
     let createdAt: String
