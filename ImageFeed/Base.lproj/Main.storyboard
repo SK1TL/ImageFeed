@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="MhS-vZ-0Gj">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="UjG-Vr-Uz1">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -224,7 +224,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UbY-El-Mo7">
-                                <rect key="frame" x="16" y="680" width="361" height="48"/>
+                                <rect key="frame" x="16" y="714" width="361" height="48"/>
                                 <color key="backgroundColor" name="YP White"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="aqG-9g-jXF"/>
@@ -265,15 +265,16 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="V1v-Qs-sQs" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2076" y="-777"/>
+            <point key="canvasLocation" x="-379" y="-1045"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Js5-mo-Iyh">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="MhS-vZ-0Gj" sceneMemberID="viewController">
                     <toolbarItems/>
+                    <navigationItem key="navigationItem" id="yuu-RI-dLS"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="fOQ-hG-2Tj">
-                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -283,7 +284,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Umh-dS-n1Y" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2947" y="-777"/>
+            <point key="canvasLocation" x="-1329" y="-1045"/>
         </scene>
         <!--Web View View Controller-->
         <scene sceneID="XiR-B2-nsK">
@@ -340,7 +341,34 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="R2Z-eg-xqE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1245.0381679389313" y="-777.46478873239437"/>
+            <point key="canvasLocation" x="508" y="-1045"/>
+        </scene>
+        <!--Splash View Controller-->
+        <scene sceneID="mBj-od-v7j">
+            <objects>
+                <viewController id="UjG-Vr-Uz1" customClass="SplashViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="9Td-bl-3cL">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="splash_screen_logo" translatesAutoresizingMaskIntoConstraints="NO" id="3qV-Pg-cut">
+                                <rect key="frame" x="160" y="388" width="73" height="76"/>
+                            </imageView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="oxG-Na-BF3"/>
+                        <color key="backgroundColor" name="YP Background"/>
+                        <constraints>
+                            <constraint firstItem="3qV-Pg-cut" firstAttribute="centerX" secondItem="9Td-bl-3cL" secondAttribute="centerX" id="VwP-7e-XX1"/>
+                            <constraint firstItem="3qV-Pg-cut" firstAttribute="centerY" secondItem="9Td-bl-3cL" secondAttribute="centerY" id="t5I-W8-2da"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <segue destination="MhS-vZ-0Gj" kind="presentation" identifier="ShowAuthenticationScreen" modalPresentationStyle="fullScreen" id="Bhv-Yp-jkS"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dWa-bz-T2w" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2421" y="-568"/>
         </scene>
     </scenes>
     <resources>
@@ -350,6 +378,7 @@
         <image name="Logo_of_Unsplash" width="60" height="60"/>
         <image name="Sharing" width="51" height="51"/>
         <image name="nav_back_button" width="24" height="24"/>
+        <image name="splash_screen_logo" width="72.666664123535156" height="75.333335876464844"/>
         <image name="tab_editorial_active" width="30" height="30"/>
         <image name="tab_profile_active" width="30" height="30"/>
         <namedColor name="YP Background">
