@@ -11,5 +11,5 @@ struct ResponseBody: Decodable {
     let accessToken: String
     let tokenType: String
     let scope: String
-    let createdAt: String
+    let createdAt: Int
 }
