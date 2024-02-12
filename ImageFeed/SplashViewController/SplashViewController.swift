@@ -28,7 +28,7 @@ final class SplashViewController: UIViewController {
     
     private func fetchOAuthToken(_ code: String) {
         OAuth2Service.shared.fetchAuthToken(code: code) { [weak self] result in
-            guard let self = self else { return }
+            guard let self else { return }
             switch result {
             case .success:
                 self.switchToTabBarController()
@@ -56,7 +56,7 @@ extension SplashViewController {
 extension SplashViewController: AuthViewControllerDelegate {
     func authViewController(_ vc: AuthViewController, didAuthenticateWithCode code: String) {
         dismiss(animated: true) { [weak self] in
-            guard let self = self else { return }
+            guard let self else { return }
             self.fetchOAuthToken(code)
         }
     }
