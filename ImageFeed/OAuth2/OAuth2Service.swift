@@ -37,7 +37,7 @@ final class OAuth2Service {
                 if 200..<300 ~= statusCode {
                     let decoder = JSONDecoder()
                     decoder.keyDecodingStrategy = .convertFromSnakeCase
-                    guard let object = try? decoder.decode(ResponseBody.self, from: data) else {
+                    guard let object = try? decoder.decode(OAuthTokenResponseBody.self, from: data) else {
                         fulfillCompletion(.failure(NetworkErrors.invalidDecoding))
                         return
                     }
@@ -58,9 +58,9 @@ final class OAuth2Service {
         var urlComponents = URLComponents(string: "https://unsplash.com/oauth/token")!
         
         urlComponents.queryItems = [
-            URLQueryItem(name: "client_id", value: Constants.accessKey),
-            URLQueryItem(name: "client_secret", value: Constants.secretKey),
-            URLQueryItem(name: "redirect_uri", value: Constants.redirectURI),
+            URLQueryItem(name: "client_id", value: Constants.accessKey.rawValue),
+            URLQueryItem(name: "client_secret", value: Constants.secretKey.rawValue),
+            URLQueryItem(name: "redirect_uri", value: Constants.redirectURI.rawValue),
             URLQueryItem(name: "code", value: code),
             URLQueryItem(name: "grant_type", value: "authorization_code")
         ]
