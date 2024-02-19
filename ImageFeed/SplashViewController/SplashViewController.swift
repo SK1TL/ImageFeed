@@ -10,7 +10,8 @@ import ProgressHUD
 
 final class SplashViewController: UIViewController {
     private let ShowAuthenticationScreenSegueIdentifier = "ShowAuthenticationScreen"
-    private var blokingProgressHUD = UIBlokingProgressHUD()
+    private var blokingProgressHUD = UIBlockingProgressHUD()
+    private let profileService = ProfileService.shared
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -34,9 +35,9 @@ final class SplashViewController: UIViewController {
             switch result {
             case .success:
                 self.switchToTabBarController()
-                UIBlokingProgressHUD.dismiss()
+                UIBlockingProgressHUD.dismiss()
             case .failure(let error):
-                UIBlokingProgressHUD.dismiss()
+                UIBlockingProgressHUD.dismiss()
                 print("Token not recieved \(error)")
             }
         }
@@ -59,9 +60,9 @@ extension SplashViewController {
 
 extension SplashViewController: AuthViewControllerDelegate {
     func authViewController(_ vc: AuthViewController, didAuthenticateWithCode code: String) {
-        UIBlokingProgressHUD.show()
         dismiss(animated: true) { [weak self] in
             guard let self else { return }
+            UIBlockingProgressHUD.show()
             self.fetchOAuthToken(code)
         }
     }
