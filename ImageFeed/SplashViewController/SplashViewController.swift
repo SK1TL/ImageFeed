@@ -13,6 +13,7 @@ final class SplashViewController: UIViewController {
     private var blokingProgressHUD = UIBlockingProgressHUD()
     private let profileService = ProfileService.shared
     private var logoView: UIImageView?
+    private var alertPresenter: AlertPresenterProtocol?
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -29,8 +30,6 @@ final class SplashViewController: UIViewController {
             .instantiateViewController(withIdentifier: "TabBarViewController")
         window.rootViewController = tabBarController
     }
-    
-
 }
 
 extension SplashViewController {
@@ -48,7 +47,6 @@ extension SplashViewController {
 }
 
 extension SplashViewController: AuthViewControllerDelegate {
-    
     private func fetchOAuthToken(_ code: String) {
         OAuth2Service.shared.fetchOAuthToken(code) { [weak self] result in
             guard let self else { return }
@@ -82,25 +80,23 @@ extension SplashViewController: AuthViewControllerDelegate {
     }
     
     private func showAlert(parameter: String, _ problem: ProblemType) {
-        let alert = UIAlertController(
+        let alertModel = AlertModel(
             title: "Что-то пошло не так(",
             message: "Не удалось войти в систему",
-            preferredStyle: .alert)
-        let alertAction = UIAlertAction(title: "Ok", style: .default) {[weak self] _ in
+            buttonText: "Ок",
+            error: problem
+        ) { [weak self] problem in
             guard let self else { return }
             switch problem {
-            case .tokenProblem: self.fetchOAuthToken(parameter)
-            case .profileProblem: self.fetchProfile(parameter)
+            case .tokenProblem:
+                self.fetchOAuthToken(parameter)
+            case .profileProblem:
+                self.fetchProfile(parameter)
+            case .none:
+                break
             }
         }
-        alert.addAction(alertAction)
-        let vc = self.presentedViewController ?? self
-        vc.present(alert, animated: true)
-    }
-    
-    enum ProblemType {
-        case tokenProblem
-        case profileProblem
+        alertPresenter?.showAlert(model: alertModel)
     }
     
     func authViewController(_ vc: AuthViewController, didAuthenticateWithCode code: String) {
@@ -111,3 +107,4 @@ extension SplashViewController: AuthViewControllerDelegate {
         }
     }
 }
+

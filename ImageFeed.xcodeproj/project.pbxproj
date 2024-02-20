@@ -30,6 +30,9 @@
 		853127DA2B8376FE008589D5 /* ProfileResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853127D92B8376FE008589D5 /* ProfileResult.swift */; };
 		853127DC2B83779B008589D5 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853127DB2B83779B008589D5 /* Profile.swift */; };
 		853127DE2B83E5F6008589D5 /* ProfileImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853127DD2B83E5F6008589D5 /* ProfileImageService.swift */; };
+		853127E02B84DACD008589D5 /* AlertModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853127DF2B84DACC008589D5 /* AlertModel.swift */; };
+		853127E22B84DBC2008589D5 /* AlertPresenterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853127E12B84DBC2008589D5 /* AlertPresenterProtocol.swift */; };
+		853127E62B84DC39008589D5 /* AlertPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853127E52B84DC39008589D5 /* AlertPresenter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,6 +60,9 @@
 		853127D92B8376FE008589D5 /* ProfileResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileResult.swift; sourceTree = "<group>"; };
 		853127DB2B83779B008589D5 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		853127DD2B83E5F6008589D5 /* ProfileImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageService.swift; sourceTree = "<group>"; };
+		853127DF2B84DACC008589D5 /* AlertModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertModel.swift; sourceTree = "<group>"; };
+		853127E12B84DBC2008589D5 /* AlertPresenterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertPresenterProtocol.swift; sourceTree = "<group>"; };
+		853127E52B84DC39008589D5 /* AlertPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertPresenter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -169,6 +175,9 @@
 			children = (
 				853127D42B836B42008589D5 /* UIBlokingProgressHUD.swift */,
 				853127CF2B7787A6008589D5 /* SplashViewController.swift */,
+				853127DF2B84DACC008589D5 /* AlertModel.swift */,
+				853127E12B84DBC2008589D5 /* AlertPresenterProtocol.swift */,
+				853127E52B84DC39008589D5 /* AlertPresenter.swift */,
 			);
 			path = SplashViewController;
 			sourceTree = "<group>";
@@ -251,6 +260,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				853127DA2B8376FE008589D5 /* ProfileResult.swift in Sources */,
+				853127E62B84DC39008589D5 /* AlertPresenter.swift in Sources */,
 				8531278D2B75517F008589D5 /* OAuth2TokenStorage.swift in Sources */,
 				853127D72B837411008589D5 /* ProfileService.swift in Sources */,
 				851A0B2E2B432371003E6D97 /* ImagesListViewController.swift in Sources */,
@@ -258,6 +268,7 @@
 				851A0B5E2B4AD373003E6D97 /* ImagesListCell.swift in Sources */,
 				851A0B842B5AC478003E6D97 /* ProfileViewController.swift in Sources */,
 				853127DC2B83779B008589D5 /* Profile.swift in Sources */,
+				853127E02B84DACD008589D5 /* AlertModel.swift in Sources */,
 				853127D02B7787A6008589D5 /* SplashViewController.swift in Sources */,
 				851A0B2A2B432371003E6D97 /* AppDelegate.swift in Sources */,
 				8531278B2B75510A008589D5 /* OAuth2Service.swift in Sources */,
@@ -268,6 +279,7 @@
 				853126D72B7147E7008589D5 /* Constants.swift in Sources */,
 				851A0B862B5BDE9C003E6D97 /* SingleImageViewController.swift in Sources */,
 				853126DC2B726707008589D5 /* WebViewViewController.swift in Sources */,
+				853127E22B84DBC2008589D5 /* AlertPresenterProtocol.swift in Sources */,
 				851A0B2C2B432371003E6D97 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

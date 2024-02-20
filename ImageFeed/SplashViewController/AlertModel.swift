@@ -1,0 +1,21 @@
+//
+//  AlertModel.swift
+//  ImageFeed
+//
+//  Created by Артур Гайфуллин on 20.02.2024.
+//
+
+import Foundation
+
+public struct AlertModel {
+    let title: String
+    let message: String
+    let buttonText: String
+    let error: ProblemType?
+    let completion: (ProblemType?) -> Void
+}
+
+enum ProblemType {
+    case tokenProblem
+    case profileProblem
+}
