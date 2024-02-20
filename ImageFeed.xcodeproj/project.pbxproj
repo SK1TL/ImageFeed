@@ -29,6 +29,7 @@
 		853127D72B837411008589D5 /* ProfileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853127D62B837411008589D5 /* ProfileService.swift */; };
 		853127DA2B8376FE008589D5 /* ProfileResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853127D92B8376FE008589D5 /* ProfileResult.swift */; };
 		853127DC2B83779B008589D5 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853127DB2B83779B008589D5 /* Profile.swift */; };
+		853127DE2B83E5F6008589D5 /* ProfileImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853127DD2B83E5F6008589D5 /* ProfileImageService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,6 +56,7 @@
 		853127D62B837411008589D5 /* ProfileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileService.swift; sourceTree = "<group>"; };
 		853127D92B8376FE008589D5 /* ProfileResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileResult.swift; sourceTree = "<group>"; };
 		853127DB2B83779B008589D5 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
+		853127DD2B83E5F6008589D5 /* ProfileImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +123,7 @@
 				851A0B832B5AC478003E6D97 /* ProfileViewController.swift */,
 				853127D92B8376FE008589D5 /* ProfileResult.swift */,
 				853127DB2B83779B008589D5 /* Profile.swift */,
+				853127DD2B83E5F6008589D5 /* ProfileImageService.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -258,6 +261,7 @@
 				853127D02B7787A6008589D5 /* SplashViewController.swift in Sources */,
 				851A0B2A2B432371003E6D97 /* AppDelegate.swift in Sources */,
 				8531278B2B75510A008589D5 /* OAuth2Service.swift in Sources */,
+				853127DE2B83E5F6008589D5 /* ProfileImageService.swift in Sources */,
 				853126D92B7265B4008589D5 /* AuthViewController.swift in Sources */,
 				8531278F2B762397008589D5 /* NetworkErrors.swift in Sources */,
 				853127D52B836B42008589D5 /* UIBlokingProgressHUD.swift in Sources */,

@@ -11,6 +11,7 @@ final class ProfileViewController: UIViewController {
     
     private let profileService = ProfileService.shared
     private let tokenStorage = OAuth2TokenStorage()
+    private var profileImageServiceObserver: NSObjectProtocol?
     
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
@@ -58,10 +59,31 @@ final class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        profileImageServiceObserver = NotificationCenter.default
+            .addObserver(
+                forName: ProfileImageService.didChangeNotification,
+                object: nil,
+                queue: .main) {[weak self] _ in
+                    guard let self = self else { return }
+                    self.updateAvatar()
+                }
+        updateAvatar()
+        
         view.backgroundColor = .ypBackground
         addSubviews()
         makeConstraints()
-        fetchProfile()
+//        fetchProfile()
+        
+        guard let profile = profileService.profile else {return}
+    }
+    
+    private func updateAvatar() {
+        guard
+            let profileImageURL = ProfileImageService.shared.avatarURL,
+            let url = URL(string: profileImageURL)
+        else { return }
+        // TODO [Sprint 11] Обновить аватар, используя Kingfisher
     }
     
     private func addSubviews() {
@@ -93,20 +115,20 @@ final class ProfileViewController: UIViewController {
         ])
     }
     
-    private func fetchProfile() {
-        guard let token = tokenStorage.token else { return }
-        profileService.fetchProfile(token) { [weak self] result in
-            guard let self else { return }
-            switch result {
-            case let .success(profile):
-                self.userNameLabel.text = profile.userName
-                self.loginLabel.text = profile.loginName
-                self.descriptionLabel.text = profile.bio
-            case .failure:
-                return
-            }
-        }
-    }
+//    private func fetchProfile() {
+//        guard let token = tokenStorage.token else { return }
+//        profileService.fetchProfile(token) { [weak self] result in
+//            guard let self else { return }
+//            switch result {
+//            case let .success(profile):
+//                self.userNameLabel.text = profile.userName
+//                self.loginLabel.text = profile.loginName
+//                self.descriptionLabel.text = profile.bio
+//            case .failure:
+//                return
+//            }
+//        }
+//    }
     
     @objc private func didTapLogoutButton() {}
 }

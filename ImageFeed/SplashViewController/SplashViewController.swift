@@ -12,6 +12,7 @@ final class SplashViewController: UIViewController {
     private let ShowAuthenticationScreenSegueIdentifier = "ShowAuthenticationScreen"
     private var blokingProgressHUD = UIBlockingProgressHUD()
     private let profileService = ProfileService.shared
+    private var logoView: UIImageView?
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -29,19 +30,7 @@ final class SplashViewController: UIViewController {
         window.rootViewController = tabBarController
     }
     
-    private func fetchOAuthToken(_ code: String) {
-        OAuth2Service.shared.fetchOAuthToken(code) { [weak self] result in
-            guard let self else { return }
-            switch result {
-            case .success:
-                self.switchToTabBarController()
-                UIBlockingProgressHUD.dismiss()
-            case .failure(let error):
-                UIBlockingProgressHUD.dismiss()
-                print("Token not recieved \(error)")
-            }
-        }
-    }
+
 }
 
 extension SplashViewController {
@@ -59,6 +48,61 @@ extension SplashViewController {
 }
 
 extension SplashViewController: AuthViewControllerDelegate {
+    
+    private func fetchOAuthToken(_ code: String) {
+        OAuth2Service.shared.fetchOAuthToken(code) { [weak self] result in
+            guard let self else { return }
+            switch result {
+            case .success(let token):
+                self.fetchProfile(token)
+                UIBlockingProgressHUD.show()
+            case .failure(let error):
+                UIBlockingProgressHUD.show()
+                print("Token not received \(error)")
+                self.showAlert(parameter: code, .tokenProblem)
+                break
+            }
+        }
+    }
+    
+    private func fetchProfile(_ token: String) {
+        profileService.fetchProfile(token) { [weak self] result in
+            guard let self else { return }
+            switch result {
+            case .success(let profile):
+                ProfileImageService.shared.fetchProfileImageURL(username: profile.userName) { _ in}
+                UIBlockingProgressHUD.dismiss()
+                self.switchToTabBarController()
+            case .failure(let error):
+                UIBlockingProgressHUD.dismiss()
+                print("Profile not received \(error)")
+                self.showAlert(parameter: token, .profileProblem)
+            }
+        }
+    }
+    
+    private func showAlert(parameter: String, _ problem: ProblemType) {
+        let alert = UIAlertController(
+            title: "Что-то пошло не так(",
+            message: "Не удалось войти в систему",
+            preferredStyle: .alert)
+        let alertAction = UIAlertAction(title: "Ok", style: .default) {[weak self] _ in
+            guard let self else { return }
+            switch problem {
+            case .tokenProblem: self.fetchOAuthToken(parameter)
+            case .profileProblem: self.fetchProfile(parameter)
+            }
+        }
+        alert.addAction(alertAction)
+        let vc = self.presentedViewController ?? self
+        vc.present(alert, animated: true)
+    }
+    
+    enum ProblemType {
+        case tokenProblem
+        case profileProblem
+    }
+    
     func authViewController(_ vc: AuthViewController, didAuthenticateWithCode code: String) {
         dismiss(animated: true) { [weak self] in
             guard let self else { return }
@@ -66,6 +110,4 @@ extension SplashViewController: AuthViewControllerDelegate {
             self.fetchOAuthToken(code)
         }
     }
-    
-    
 }
