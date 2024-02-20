@@ -8,6 +8,12 @@
 import Foundation
 
 extension URLSession {
+    enum NetworkErrors: Error {
+        case invalidUrl
+        case httpStatusCode(Int)
+        case invalidDecoding
+    }
+    
     func objectTask<T: Decodable>(
         for request: URLRequest,
         completion: @escaping (Result<T, Error>) -> Void
@@ -32,12 +38,6 @@ extension URLSession {
             }
         }
         return task
-    }
-    
-    enum NetworkErrors: Error {
-        case invalidUrl
-        case httpStatusCode(Int)
-        case invalidDecoding
     }
 }
 
