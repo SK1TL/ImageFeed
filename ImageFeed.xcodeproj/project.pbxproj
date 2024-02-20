@@ -96,6 +96,7 @@
 		851A0B282B432371003E6D97 /* ImageFeed */ = {
 			isa = PBXGroup;
 			children = (
+				853127E92B84EBAC008589D5 /* Alert */,
 				853127CE2B778780008589D5 /* SplashViewController */,
 				853127872B754F03008589D5 /* OAuth2 */,
 				851A0B822B5AB95E003E6D97 /* Profile */,
@@ -175,11 +176,18 @@
 			children = (
 				853127D42B836B42008589D5 /* UIBlokingProgressHUD.swift */,
 				853127CF2B7787A6008589D5 /* SplashViewController.swift */,
+			);
+			path = SplashViewController;
+			sourceTree = "<group>";
+		};
+		853127E92B84EBAC008589D5 /* Alert */ = {
+			isa = PBXGroup;
+			children = (
 				853127DF2B84DACC008589D5 /* AlertModel.swift */,
 				853127E12B84DBC2008589D5 /* AlertPresenterProtocol.swift */,
 				853127E52B84DC39008589D5 /* AlertPresenter.swift */,
 			);
-			path = SplashViewController;
+			path = Alert;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
