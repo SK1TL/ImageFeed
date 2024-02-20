@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class ProfileViewController: UIViewController {
     
@@ -84,6 +85,13 @@ final class ProfileViewController: UIViewController {
             let url = URL(string: profileImageURL)
         else { return }
         // TODO [Sprint 11] Обновить аватар, используя Kingfisher
+        imageView.kf.indicatorType = .activity
+        let processor = RoundCornerImageProcessor(cornerRadius: 40)
+        imageView.kf.setImage(
+            with: url,
+            placeholder: UIImage(named: "user_avatar"),
+            options: [.processor(processor)]
+        )
     }
     
     private func addSubviews() {
