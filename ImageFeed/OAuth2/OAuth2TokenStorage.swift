@@ -10,7 +10,7 @@ import SwiftKeychainWrapper
 
 final class OAuth2TokenStorage {
     
-    private let key = "Auth token"
+    private let key = "token"
     
     var token: String? {
         get {
