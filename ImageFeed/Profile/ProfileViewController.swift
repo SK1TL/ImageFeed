@@ -74,7 +74,6 @@ final class ProfileViewController: UIViewController {
         view.backgroundColor = .ypBackground
         addSubviews()
         makeConstraints()
-//        fetchProfile()
         
         guard let profile = profileService.profile else {return}
     }
@@ -122,21 +121,6 @@ final class ProfileViewController: UIViewController {
             logoutButton.centerYAnchor.constraint(equalTo: imageView.centerYAnchor)
         ])
     }
-    
-//    private func fetchProfile() {
-//        guard let token = tokenStorage.token else { return }
-//        profileService.fetchProfile(token) { [weak self] result in
-//            guard let self else { return }
-//            switch result {
-//            case let .success(profile):
-//                self.userNameLabel.text = profile.userName
-//                self.loginLabel.text = profile.loginName
-//                self.descriptionLabel.text = profile.bio
-//            case .failure:
-//                return
-//            }
-//        }
-//    }
     
     @objc private func didTapLogoutButton() {}
 }

@@ -102,7 +102,7 @@
 		851A0B282B432371003E6D97 /* ImageFeed */ = {
 			isa = PBXGroup;
 			children = (
-				853127F02B8602A6008589D5 /* TabBarController */,
+				853127F02B8602A6008589D5 /* TabBar */,
 				853127E92B84EBAC008589D5 /* Alert */,
 				853127CE2B778780008589D5 /* SplashViewController */,
 				853127872B754F03008589D5 /* OAuth2 */,
@@ -114,9 +114,8 @@
 				851A0B292B432371003E6D97 /* AppDelegate.swift */,
 				851A0B2B2B432371003E6D97 /* SceneDelegate.swift */,
 				851A0B2F2B432371003E6D97 /* Main.storyboard */,
-				851A0B322B43237C003E6D97 /* Assets.xcassets */,
 				851A0B342B43237C003E6D97 /* LaunchScreen.storyboard */,
-				851A0B372B43237C003E6D97 /* Info.plist */,
+				853127F32B862572008589D5 /* Sources */,
 			);
 			path = ImageFeed;
 			sourceTree = "<group>";
@@ -197,12 +196,21 @@
 			path = Alert;
 			sourceTree = "<group>";
 		};
-		853127F02B8602A6008589D5 /* TabBarController */ = {
+		853127F02B8602A6008589D5 /* TabBar */ = {
 			isa = PBXGroup;
 			children = (
 				853127F12B8602CC008589D5 /* TabBarController.swift */,
 			);
-			path = TabBarController;
+			path = TabBar;
+			sourceTree = "<group>";
+		};
+		853127F32B862572008589D5 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				851A0B372B43237C003E6D97 /* Info.plist */,
+				851A0B322B43237C003E6D97 /* Assets.xcassets */,
+			);
+			path = Sources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
