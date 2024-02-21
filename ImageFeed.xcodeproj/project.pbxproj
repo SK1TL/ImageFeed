@@ -115,6 +115,7 @@
 				851A0B2B2B432371003E6D97 /* SceneDelegate.swift */,
 				851A0B2F2B432371003E6D97 /* Main.storyboard */,
 				851A0B342B43237C003E6D97 /* LaunchScreen.storyboard */,
+				851A0B372B43237C003E6D97 /* Info.plist */,
 				853127F32B862572008589D5 /* Sources */,
 			);
 			path = ImageFeed;
@@ -207,7 +208,6 @@
 		853127F32B862572008589D5 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				851A0B372B43237C003E6D97 /* Info.plist */,
 				851A0B322B43237C003E6D97 /* Assets.xcassets */,
 			);
 			path = Sources;
