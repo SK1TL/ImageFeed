@@ -30,8 +30,7 @@ extension URLSession {
                         return
                     }
                     completion(.success(object))
-                }
-                else {
+                } else {
                     completion(.failure(error ?? NetworkErrors.httpStatusCode(statusCode)))
                     return
                 }
@@ -50,7 +49,7 @@ extension URLRequest {
         guard
             let baseURL = URL(string: baseURL),
             let url = URL(string: path, relativeTo: baseURL)
-        else {fatalError("Failed to create URL")}
+        else { fatalError("Failed to create URL") }
         var request = URLRequest(url: url)
         request.httpMethod = httpMethod
         return request
