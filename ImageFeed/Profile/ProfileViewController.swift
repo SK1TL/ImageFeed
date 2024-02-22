@@ -74,8 +74,6 @@ final class ProfileViewController: UIViewController {
         view.backgroundColor = .ypBackground
         addSubviews()
         makeConstraints()
-        
-        guard let profile = profileService.profile else {return}
     }
     
     private func updateAvatar() {
@@ -83,7 +81,6 @@ final class ProfileViewController: UIViewController {
             let profileImageURL = ProfileImageService.shared.avatarURL,
             let url = URL(string: profileImageURL)
         else { return }
-        // TODO [Sprint 11] Обновить аватар, используя Kingfisher
         imageView.kf.indicatorType = .activity
         let processor = RoundCornerImageProcessor(cornerRadius: 40)
         imageView.kf.setImage(
