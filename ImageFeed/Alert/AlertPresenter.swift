@@ -5,15 +5,14 @@
 //  Created by Артур Гайфуллин on 20.02.2024.
 //
 
-import Foundation
 import UIKit
 
 final class AlertPresenter: AlertPresenterProtocol {
     
-    weak var splashViewController: SplashViewController?
+    weak var viewController: UIViewController?
     
-    init(splashViewController: SplashViewController? = nil) {
-        self.splashViewController = splashViewController
+    init(viewController: UIViewController? = nil) {
+        self.viewController = viewController
     }
     
     func showAlert(model: AlertModel) {
@@ -28,6 +27,10 @@ final class AlertPresenter: AlertPresenterProtocol {
         ) { _ in
             model.completion(model.error)
         }
+        
+        alert.addAction(alertAction)
+        
+        viewController?.present(alert, animated: true)
     }
 }
 

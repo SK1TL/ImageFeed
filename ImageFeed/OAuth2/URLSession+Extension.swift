@@ -24,7 +24,6 @@ extension URLSession {
                let statusCode = (response as? HTTPURLResponse)?.statusCode {
                 if 200..<300 ~= statusCode {
                     let decoder = JSONDecoder()
-                    decoder.keyDecodingStrategy = .convertFromSnakeCase
                     guard let object = try? decoder.decode(T.self, from: data) else {
                         completion(.failure(NetworkErrors.invalidDecoding))
                         return
@@ -37,21 +36,5 @@ extension URLSession {
             }
         }
         return task
-    }
-}
-
-extension URLRequest {
-    static func makeHTTPRequest(
-        path: String,
-        httpMethod: String,
-        baseURL: String = Constants.defaultBaseURL.rawValue
-    ) -> URLRequest {
-        guard
-            let baseURL = URL(string: baseURL),
-            let url = URL(string: path, relativeTo: baseURL)
-        else { fatalError("Failed to create URL") }
-        var request = URLRequest(url: url)
-        request.httpMethod = httpMethod
-        return request
     }
 }

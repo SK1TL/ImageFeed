@@ -36,12 +36,12 @@ final class OAuth2Service {
         let task = urlSession.objectTask(for: request) { [weak self] (result: Result<OAuthTokenResponseBody, Error>) in
             guard let self else { return }
             switch result {
-            case .success(let body):
+            case let .success(body):
                 let authToken = body.accessToken
                 self.authToken = authToken
                 completionOnMainThread(.success(authToken))
                 self.task = nil
-            case .failure(let error):
+            case let .failure(error):
                 completionOnMainThread(.failure(error))
                 self.lastCode = nil
             }

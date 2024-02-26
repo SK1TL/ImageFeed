@@ -16,25 +16,21 @@ final class TabBarController: UITabBarController {
         tabBar.tintColor = .ypWhite
         tabBar.unselectedItemTintColor = .ypWhiteAlpha50
         
-        let storyboard = UIStoryboard(name: "Main", bundle: .main)
-        
-        let imageListViewContoller = storyboard.instantiateViewController(withIdentifier: "ImageListViewController")
+        let imageListViewContoller = ImagesListViewController()
+        imageListViewContoller.tabBarItem = UITabBarItem(
+            title: "",
+            image: UIImage(named: "tab_editorial_no_active"),
+            selectedImage: UIImage(named: "tab_editorial_active")
+        )
         
         let profileViewController = ProfileViewController()
         profileViewController.tabBarItem = UITabBarItem(
             title: "",
-            image: UIImage(named: "tab_profile_active"),
-            selectedImage: nil
+            image: UIImage(named: "tab_profile_no_active"),
+            selectedImage: UIImage(named: "tab_profile_active")
         )
-        viewControllers = [imageListViewContoller, profileViewController]
         
-    }
-    
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        selectedIndex = 0
+        viewControllers = [imageListViewContoller, profileViewController]
     }
 }

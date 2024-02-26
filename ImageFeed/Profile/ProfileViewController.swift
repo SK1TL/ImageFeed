@@ -65,22 +65,21 @@ final class ProfileViewController: UIViewController {
             .addObserver(
                 forName: ProfileImageService.didChangeNotification,
                 object: nil,
-                queue: .main) {[weak self] _ in
-                    guard let self = self else { return }
-                    self.updateAvatar()
-                }
+                queue: .main
+            ) { [weak self] _ in
+                guard let self else { return }
+                self.updateAvatar()
+            }
         updateAvatar()
         
         view.backgroundColor = .ypBackground
+        configureViews()
         addSubviews()
         makeConstraints()
     }
     
     private func updateAvatar() {
-        guard
-            let profileImageURL = ProfileImageService.shared.avatarURL,
-            let url = URL(string: profileImageURL)
-        else { return }
+        guard let url = URL(string: ProfileImageService.shared.avatarURL) else { return }
         imageView.kf.indicatorType = .activity
         let processor = RoundCornerImageProcessor(cornerRadius: 40)
         imageView.kf.setImage(
@@ -117,6 +116,14 @@ final class ProfileViewController: UIViewController {
             logoutButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
             logoutButton.centerYAnchor.constraint(equalTo: imageView.centerYAnchor)
         ])
+    }
+    
+    private func configureViews() {
+        let profile = profileService.profile
+        
+        userNameLabel.text = profile?.name
+        descriptionLabel.text = profile?.bio
+        loginLabel.text = profile?.loginName
     }
     
     @objc private func didTapLogoutButton() {}

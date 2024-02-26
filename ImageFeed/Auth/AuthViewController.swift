@@ -15,12 +15,13 @@ final class AuthViewController: UIViewController {
     
     weak var delegate: AuthViewControllerDelegate?
     
-    private lazy var entreButton: UIButton = {
+    private lazy var enterButton: UIButton = {
         let button = UIButton()
         button.setTitle("Войти", for: .normal)
         button.layer.cornerRadius = 16
         button.backgroundColor = .ypWhite
         button.setTitleColor(.ypBlack, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -39,20 +40,20 @@ final class AuthViewController: UIViewController {
         navigationController?.setNavigationBarHidden(true, animated: false)
         addSubviews()
         makeConstraints()
-        entreButton.addTarget(self, action: #selector(didTapLoginButton), for: .touchUpInside)
+        enterButton.addTarget(self, action: #selector(didTapLoginButton), for: .touchUpInside)
     }
         
     private func addSubviews() {
         view.addSubview(unsplashLogo)
-        view.addSubview(entreButton)
+        view.addSubview(enterButton)
     }
     
     private func makeConstraints() {
         NSLayoutConstraint.activate([
-            entreButton.heightAnchor.constraint(equalToConstant: 48),
-            entreButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            entreButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            entreButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -90),
+            enterButton.heightAnchor.constraint(equalToConstant: 48),
+            enterButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            enterButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            enterButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -90),
             
             unsplashLogo.heightAnchor.constraint(equalToConstant: 60),
             unsplashLogo.widthAnchor.constraint(equalToConstant: 60),

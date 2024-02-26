@@ -9,10 +9,17 @@ import UIKit
 
 final class ImagesListViewController: UIViewController {
     
-    @IBOutlet private var tableView: UITableView!
-    
     private let photosName: [String] = Array(0..<21).map{ "\($0)" }
-    private let ShowSingleImageSegueIdentifier = "ShowSingleImage"
+    
+    private lazy var tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.backgroundColor = .clear
+        tableView.register(ImagesListCell.self, forCellReuseIdentifier: ImagesListCell.reuseIdentifier)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+       return tableView
+    }()
     
     private lazy var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -23,18 +30,22 @@ final class ImagesListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
+        view.backgroundColor = .ypBlack
+        addSubviews()
+        makeConstraints()
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == ShowSingleImageSegueIdentifier {
-            let viewController = segue.destination as! SingleImageViewController
-            let indexPath = sender as! IndexPath
-            let image = UIImage(named: photosName[indexPath.row])
-            viewController.image = image
-        } else {
-            super.prepare(for: segue, sender: sender)
-        }
+    private func addSubviews() {
+        view.addSubview(tableView)
+    }
+    
+    private func makeConstraints() {
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: view.topAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+        ])
     }
 }
 
@@ -90,6 +101,10 @@ extension ImagesListViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "ShowSingleImage", sender: indexPath)
+        let viewController = SingleImageViewController()
+        let image = UIImage(named: photosName[indexPath.row])
+        viewController.image = image
+        viewController.modalPresentationStyle = .fullScreen
+        present(viewController, animated: true)
     }
 }
