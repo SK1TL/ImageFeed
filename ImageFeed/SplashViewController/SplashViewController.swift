@@ -27,13 +27,11 @@ final class SplashViewController: UIViewController {
         if OAuth2TokenStorage().token != nil {
             switchToTabBarController()
         } else {
-            let storyboard = UIStoryboard(name: "Main", bundle: .main)
-            let viewController = storyboard.instantiateViewController(
-                withIdentifier: "AuthViewController"
-            ) as! AuthViewController
-            viewController.delegate = self
-            viewController.modalPresentationStyle = .fullScreen
-            present(viewController, animated: true)
+            let authVC = AuthViewController()
+            authVC.delegate = self
+            let navigationController = UINavigationController(rootViewController: authVC)
+            navigationController.modalPresentationStyle = .fullScreen
+            present(navigationController, animated: true)
         }
         
         addSubviews()
@@ -53,9 +51,7 @@ final class SplashViewController: UIViewController {
     
     private func switchToTabBarController() {
         guard let window = UIApplication.shared.windows.first else { fatalError("Invalid Configuration") }
-        let tabBarController = UIStoryboard(name: "Main", bundle: .main)
-            .instantiateViewController(withIdentifier: "TabBarController")
-        window.rootViewController = tabBarController
+        window.rootViewController = TabBarController()
     }
 }
 

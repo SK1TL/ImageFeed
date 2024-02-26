@@ -15,16 +15,32 @@ protocol WebViewViewControllerDelegate: AnyObject {
 
 final class WebViewViewController: UIViewController {
     
-    @IBOutlet private var webView: WKWebView!
-    @IBOutlet private var progressView: UIProgressView!
+    private lazy var authWebView: WKWebView = {
+        let webView = WKWebView()
+        webView.navigationDelegate = self
+        webView.translatesAutoresizingMaskIntoConstraints = false
+        return webView
+    }()
+    
+    private lazy var progressView: UIProgressView = {
+        let loadingView = UIProgressView()
+        loadingView.progressViewStyle = .default
+        loadingView.progressTintColor = .ypBlack
+        loadingView.translatesAutoresizingMaskIntoConstraints = false
+        return loadingView
+    }()
     
     private var estimatedProgressObservation: NSKeyValueObservation?
     weak var delegate: WebViewViewControllerDelegate?
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .ypBackground
         
-        webView.navigationDelegate = self
+        setupNavigationBar()
+        addSubviews()
+        makeConstraints()
         
         guard var urlComponents = URLComponents(string: Constants.unsplashAuthorizeURLString.rawValue) else { return }
         urlComponents.queryItems = [
@@ -37,15 +53,16 @@ final class WebViewViewController: UIViewController {
         guard let url = urlComponents.url else { return }
         
         let request = URLRequest(url: url)
-        webView.load(request)
+        authWebView.load(request)
         
-        estimatedProgressObservation = webView.observe(
+        estimatedProgressObservation = authWebView.observe(
             \.estimatedProgress,
              options: [],
              changeHandler: { [weak self] _, _ in
                  guard let self else { return }
                  self.updateProgress()
-             })
+             }
+        )
     }
     
     override func observeValue(
@@ -61,12 +78,36 @@ final class WebViewViewController: UIViewController {
         }
     }
     
-    private func updateProgress() {
-        progressView.progress = Float(webView.estimatedProgress)
-        progressView.isHidden = fabs(webView.estimatedProgress - 1.0) <= 0.0001
+    private func setupNavigationBar() {
+        navigationController?.setNavigationBarHidden(false, animated: false)
+        let backImage = UIImage(named: "nav_back_button")
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: UIImageView(image: backImage))
     }
     
-    @IBAction private func didTapBackButton(_ sender: Any) {
+    private func addSubviews() {
+        view.addSubview(authWebView)
+        view.addSubview(progressView)
+    }
+    
+    private func makeConstraints() {
+        NSLayoutConstraint.activate([
+            authWebView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            authWebView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            authWebView.topAnchor.constraint(equalTo: view.topAnchor),
+            authWebView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+            progressView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            progressView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            progressView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor)
+        ])
+    }
+    
+    private func updateProgress() {
+        progressView.progress = Float(authWebView.estimatedProgress)
+        progressView.isHidden = fabs(authWebView.estimatedProgress - 1.0) <= 0.0001
+    }
+    
+    @objc private func didTapBackButton() {
         delegate?.webViewViewControllerDidCancel(self)
     }
 }

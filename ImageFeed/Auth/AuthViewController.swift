@@ -12,19 +12,59 @@ protocol AuthViewControllerDelegate: AnyObject {
 }
 
 final class AuthViewController: UIViewController {
-    private let showWebViewSegueIdentifier = "ShowWebView"
     
     weak var delegate: AuthViewControllerDelegate?
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == showWebViewSegueIdentifier {
-            guard
-                let webViewViewController = segue.destination as? WebViewViewController
-            else { fatalError("Failed to prepare for \(showWebViewSegueIdentifier)") }
-            webViewViewController.delegate = self
-        } else {
-            super.prepare(for: segue, sender: sender)
-        }
+    private lazy var entreButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Войти", for: .normal)
+        button.layer.cornerRadius = 16
+        button.backgroundColor = .ypWhite
+        button.setTitleColor(.ypBlack, for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    private lazy var unsplashLogo: UIImageView = {
+        let unsplashImage = UIImageView()
+        unsplashImage.image = UIImage(named: "Logo_of_Unsplash")
+        unsplashImage.translatesAutoresizingMaskIntoConstraints = false
+        return unsplashImage
+    }()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        view.backgroundColor = .ypBackground
+        navigationController?.setNavigationBarHidden(true, animated: false)
+        addSubviews()
+        makeConstraints()
+        entreButton.addTarget(self, action: #selector(didTapLoginButton), for: .touchUpInside)
+    }
+        
+    private func addSubviews() {
+        view.addSubview(unsplashLogo)
+        view.addSubview(entreButton)
+    }
+    
+    private func makeConstraints() {
+        NSLayoutConstraint.activate([
+            entreButton.heightAnchor.constraint(equalToConstant: 48),
+            entreButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            entreButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            entreButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -90),
+            
+            unsplashLogo.heightAnchor.constraint(equalToConstant: 60),
+            unsplashLogo.widthAnchor.constraint(equalToConstant: 60),
+            unsplashLogo.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            unsplashLogo.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+    }
+    
+    @objc private func didTapLoginButton() {
+        let webViewVC = WebViewViewController()
+        webViewVC.delegate = self
+        navigationController?.pushViewController(webViewVC, animated: true)
     }
 }
 
