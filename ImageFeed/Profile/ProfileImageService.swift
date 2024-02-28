@@ -8,19 +8,24 @@
 import UIKit
 
 final class ProfileImageService {
-    static let shared = ProfileImageService()
     static let didChangeNotification = Notification.Name(rawValue: "ProfileImageProviderDidChange")
+    static let shared = ProfileImageService()
     private let urlSession = URLSession.shared
     private (set) var avatarURL: String = ""
     private var task: URLSessionTask?
     
+    private init() {}
+    
     func fetchProfileImageURL(username: String, completion: @escaping (Result<String, Error>) -> Void) {
         assert(Thread.isMainThread)
         
-        guard task == nil else { return }
+        guard 
+            task == nil,
+            let token = OAuth2TokenStorage().token
+        else { return }
         
         var request = URLRequest.makeHTTPRequest(path: "/users/\(username)", httpMethod: "GET")
-        request.setValue("Bearer \(OAuth2TokenStorage().token!)", forHTTPHeaderField: "Authorization")
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         let completionOnMainThread: (Result<String, Error>) -> Void = { result in
             DispatchQueue.main.async {
                 completion(result)

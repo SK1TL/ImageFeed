@@ -8,7 +8,7 @@
 import UIKit
 
 final class SplashViewController: UIViewController {
-                
+    
     private var alertPresenter: AlertPresenterProtocol?
     private let profileService = ProfileService.shared
     
@@ -19,17 +19,20 @@ final class SplashViewController: UIViewController {
         return logoView
     }()
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
         alertPresenter = AlertPresenter(viewController: self)
         view.backgroundColor = .ypBackground
         
         addSubviews()
         makeConstraints()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
         if let token = OAuth2TokenStorage().token {
-            UIBlockingProgressHUD.show()
             fetchProfile(token)
         } else {
             let authVC = AuthViewController()
@@ -55,11 +58,9 @@ final class SplashViewController: UIViewController {
         guard let window = UIApplication.shared.windows.first else { fatalError("Invalid Configuration") }
         window.rootViewController = TabBarController()
     }
-        
+    
     private func fetchOAuthToken(_ code: String) {
-        UIBlockingProgressHUD.show()
         OAuth2Service.shared.fetchOAuthToken(code) { [weak self] result in
-            UIBlockingProgressHUD.dismiss()
             guard let self else { return }
             switch result {
             case let .success(token):
@@ -73,10 +74,10 @@ final class SplashViewController: UIViewController {
     
     private func fetchProfile(_ token: String) {
         profileService.fetchProfile(token) { [weak self] result in
-            UIBlockingProgressHUD.dismiss()
             guard let self else { return }
             switch result {
             case let .success(profile):
+                UIBlockingProgressHUD.dismiss()
                 ProfileImageService.shared.fetchProfileImageURL(username: profile.userName) { _ in }
                 self.switchToTabBarController()
             case .failure:
@@ -107,13 +108,8 @@ final class SplashViewController: UIViewController {
 }
 
 extension SplashViewController: AuthViewControllerDelegate {
-    
     func authViewController(_ vc: AuthViewController, didAuthenticateWithCode code: String) {
-        dismiss(animated: true) { [weak self] in
-            guard let self else { return }
-            UIBlockingProgressHUD.show()
-            self.fetchOAuthToken(code)
-        }
+        UIBlockingProgressHUD.show()
+        fetchOAuthToken(code)
     }
 }
-

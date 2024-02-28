@@ -10,8 +10,7 @@ import Kingfisher
 
 final class ProfileViewController: UIViewController {
     
-    private let profileService = ProfileService.shared
-    private let tokenStorage = OAuth2TokenStorage()
+    private let profileService = ProfileService.shared    
     private var profileImageServiceObserver: NSObjectProtocol?
     
     private lazy var imageView: UIImageView = {
@@ -81,12 +80,10 @@ final class ProfileViewController: UIViewController {
     
     private func updateAvatar() {
         guard let url = URL(string: ProfileImageService.shared.avatarURL) else { return }
-        imageView.kf.indicatorType = .activity
-        let processor = RoundCornerImageProcessor(cornerRadius: 40)
+        imageView.kf.indicatorType = .activity        
         imageView.kf.setImage(
             with: url,
-            placeholder: UIImage(named: "user_avatar"),
-            options: [.processor(processor)]
+            placeholder: UIImage(named: "user_avatar")
         )
     }
     

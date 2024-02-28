@@ -79,8 +79,14 @@ final class WebViewViewController: UIViewController {
     
     private func setupNavigationBar() {
         navigationController?.setNavigationBarHidden(false, animated: false)
+        navigationController?.navigationBar.tintColor = .ypBlack
         let backImage = UIImage(named: "nav_back_button")
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: UIImageView(image: backImage))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            image: backImage,
+            style: .plain,
+            target: self,
+            action: #selector(didTapBackButton)
+        )
     }
     
     private func addSubviews() {

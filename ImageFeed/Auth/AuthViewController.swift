@@ -42,7 +42,7 @@ final class AuthViewController: UIViewController {
         makeConstraints()
         enterButton.addTarget(self, action: #selector(didTapLoginButton), for: .touchUpInside)
     }
-        
+    
     private func addSubviews() {
         view.addSubview(unsplashLogo)
         view.addSubview(enterButton)
@@ -51,8 +51,8 @@ final class AuthViewController: UIViewController {
     private func makeConstraints() {
         NSLayoutConstraint.activate([
             enterButton.heightAnchor.constraint(equalToConstant: 48),
-            enterButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             enterButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            enterButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
             enterButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -90),
             
             unsplashLogo.heightAnchor.constraint(equalToConstant: 60),
@@ -71,7 +71,10 @@ final class AuthViewController: UIViewController {
 
 extension AuthViewController: WebViewViewControllerDelegate {
     func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String) {
-        delegate?.authViewController(self, didAuthenticateWithCode: code)
+        dismiss(animated: true) { [weak self] in
+            guard let self else { return }
+            self.delegate?.authViewController(self, didAuthenticateWithCode: code)
+        }
     }
     
     func webViewViewControllerDidCancel(_ vc: WebViewViewController) {
