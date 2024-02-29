@@ -11,59 +11,57 @@ final class OAuth2Service {
     
     static let shared = OAuth2Service()
     
-    private init() {}
+    private let urlSession = URLSession.shared
+    private var task: URLSessionTask?
+    private var lastCode: String?
     
     private (set) var authToken: String? {
         get { OAuth2TokenStorage().token }
         set { OAuth2TokenStorage().token = newValue}
     }
     
-    func fetchAuthToken(code: String, completion: @escaping (Result<String, Error>) -> Void) {
-        guard let url = makeURL(code: code).url else {
-            completion(.failure(NetworkErrors.invalidURL))
-            return
-        }
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        let fulfillCompletion: (Result<String, Error>) -> Void = { result in
+    private init() {}
+    
+    func fetchOAuthToken(_ code: String, completion: @escaping (Result<String, Error>) -> Void) {
+        assert(Thread.isMainThread)
+        if lastCode == code { return }
+        task?.cancel()
+        lastCode = code
+        let request = authTokenRequest(code: code)
+        let completionOnMainThread: (Result<String, Error>) -> Void = { result in
             DispatchQueue.main.async {
                 completion(result)
             }
         }
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            if let data = data,
-               let response = response,
-               let statusCode = (response as? HTTPURLResponse)?.statusCode {
-                if 200..<300 ~= statusCode {
-                    let decoder = JSONDecoder()
-                    decoder.keyDecodingStrategy = .convertFromSnakeCase
-                    guard let object = try? decoder.decode(OAuthTokenResponseBody.self, from: data) else {
-                        fulfillCompletion(.failure(NetworkErrors.invalidDecoding))
-                        return
-                    }
-                    let authToken = object.accessToken
-                    self.authToken = authToken
-                    fulfillCompletion(.success(authToken))
-                }
-                else {
-                    fulfillCompletion(.failure(error ?? NetworkErrors.httpStatusCode(statusCode)))
-                    return
-                }
+        let task = urlSession.objectTask(for: request) { [weak self] (result: Result<OAuthTokenResponseBody, Error>) in
+            guard let self else { return }
+            switch result {
+            case let .success(body):
+                let authToken = body.accessToken
+                self.authToken = authToken
+                completionOnMainThread(.success(authToken))
+                self.task = nil
+            case let .failure(error):
+                completionOnMainThread(.failure(error))
+                self.lastCode = nil
             }
         }
+        self.task = task
         task.resume()
     }
-    
-    private func makeURL(code: String) -> URLComponents {
-        var urlComponents = URLComponents(string: "https://unsplash.com/oauth/token")!
-        
-        urlComponents.queryItems = [
-            URLQueryItem(name: "client_id", value: Constants.accessKey.rawValue),
-            URLQueryItem(name: "client_secret", value: Constants.secretKey.rawValue),
-            URLQueryItem(name: "redirect_uri", value: Constants.redirectURI.rawValue),
-            URLQueryItem(name: "code", value: code),
-            URLQueryItem(name: "grant_type", value: "authorization_code")
-        ]
-        return urlComponents
+}
+
+extension OAuth2Service {
+    private func authTokenRequest(code: String) -> URLRequest {
+        URLRequest.makeHTTPRequest(
+            path: "/oauth/token"
+            + "?client_id=\(Constants.accessKey.rawValue)"
+            + "&&client_secret=\(Constants.secretKey.rawValue)"
+            + "&&redirect_uri=\(Constants.redirectURI.rawValue)"
+            + "&&code=\(code)"
+            + "&&grant_type=authorization_code",
+            httpMethod: "POST",
+            baseURL: "https://unsplash.com"
+        )
     }
 }

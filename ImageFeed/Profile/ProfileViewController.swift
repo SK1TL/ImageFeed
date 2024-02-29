@@ -6,13 +6,18 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class ProfileViewController: UIViewController {
+    
+    private let profileService = ProfileService.shared    
+    private var profileImageServiceObserver: NSObjectProtocol?
     
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "Photo")
         imageView.layer.cornerRadius = 35
+        imageView.layer.masksToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
@@ -55,9 +60,31 @@ final class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        profileImageServiceObserver = NotificationCenter.default
+            .addObserver(
+                forName: ProfileImageService.didChangeNotification,
+                object: nil,
+                queue: .main
+            ) { [weak self] _ in
+                guard let self else { return }
+                self.updateAvatar()
+            }
+        updateAvatar()
+        
         view.backgroundColor = .ypBackground
+        configureViews()
         addSubviews()
         makeConstraints()
+    }
+    
+    private func updateAvatar() {
+        guard let url = URL(string: ProfileImageService.shared.avatarURL) else { return }
+        imageView.kf.indicatorType = .activity        
+        imageView.kf.setImage(
+            with: url,
+            placeholder: UIImage(named: "user_avatar")
+        )
     }
     
     private func addSubviews() {
@@ -87,6 +114,14 @@ final class ProfileViewController: UIViewController {
             logoutButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
             logoutButton.centerYAnchor.constraint(equalTo: imageView.centerYAnchor)
         ])
+    }
+    
+    private func configureViews() {
+        let profile = profileService.profile
+        
+        userNameLabel.text = profile?.name
+        descriptionLabel.text = profile?.bio
+        loginLabel.text = profile?.loginName
     }
     
     @objc private func didTapLogoutButton() {}
