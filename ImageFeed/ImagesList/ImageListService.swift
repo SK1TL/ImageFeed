@@ -18,9 +18,9 @@ final class ImagesListService {
     private var task: URLSessionTask?
     private var lastLoadedPage: Int?
     
-    private init() {}
+     init() {}
     
-    func fetchPhotoNextPage(_ token: String, completion: @escaping (Result<[Photo], Error>) -> Void) {
+    func fetchPhotosNextPage(_ token: String, completion: @escaping (Result<[Photo], Error>) -> Void) {
         if task == nil {
             let nextPage = lastLoadedPage == nil ? 1 : lastLoadedPage! + 1
             let request = imagesListRequest(token: token, page: nextPage)
