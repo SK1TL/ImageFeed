@@ -40,7 +40,7 @@
 		853127F62B8D107D008589D5 /* ProblemType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853127F52B8D107D008589D5 /* ProblemType.swift */; };
 		853127F82B8D183A008589D5 /* URLRequest+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853127F72B8D183A008589D5 /* URLRequest+Extension.swift */; };
 		853127FA2B8D25E4008589D5 /* UserResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853127F92B8D25E4008589D5 /* UserResult.swift */; };
-		853128392B910173008589D5 /* ImageListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853128382B910173008589D5 /* ImageListService.swift */; };
+		853128392B910173008589D5 /* ImagesListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853128382B910173008589D5 /* ImagesListService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -76,7 +76,7 @@
 		853127F52B8D107D008589D5 /* ProblemType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProblemType.swift; sourceTree = "<group>"; };
 		853127F72B8D183A008589D5 /* URLRequest+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLRequest+Extension.swift"; sourceTree = "<group>"; };
 		853127F92B8D25E4008589D5 /* UserResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserResult.swift; sourceTree = "<group>"; };
-		853128382B910173008589D5 /* ImageListService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageListService.swift; sourceTree = "<group>"; };
+		853128382B910173008589D5 /* ImagesListService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,7 +133,7 @@
 		851A0B5F2B4AD3AB003E6D97 /* ImagesList */ = {
 			isa = PBXGroup;
 			children = (
-				853128382B910173008589D5 /* ImageListService.swift */,
+				853128382B910173008589D5 /* ImagesListService.swift */,
 				851A0B5D2B4AD373003E6D97 /* ImagesListCell.swift */,
 				851A0B2D2B432371003E6D97 /* ImagesListViewController.swift */,
 			);
@@ -341,7 +341,7 @@
 				853127D52B836B42008589D5 /* UIBlokingProgressHUD.swift in Sources */,
 				853126D72B7147E7008589D5 /* Constants.swift in Sources */,
 				851A0B862B5BDE9C003E6D97 /* SingleImageViewController.swift in Sources */,
-				853128392B910173008589D5 /* ImageListService.swift in Sources */,
+				853128392B910173008589D5 /* ImagesListService.swift in Sources */,
 				853126DC2B726707008589D5 /* WebViewViewController.swift in Sources */,
 				853127E22B84DBC2008589D5 /* AlertPresenterProtocol.swift in Sources */,
 				851A0B2C2B432371003E6D97 /* SceneDelegate.swift in Sources */,

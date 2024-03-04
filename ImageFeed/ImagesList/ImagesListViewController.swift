@@ -6,10 +6,13 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class ImagesListViewController: UIViewController {
     
-    private let photosName: [String] = Array(0..<21).map{ "\($0)" }
+    private var photos: [Photo] = []
+    private let imagesListService = ImagesListService.shared
+    private let placeholder = UIImage(named: "Loader")
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -33,6 +36,15 @@ final class ImagesListViewController: UIViewController {
         view.backgroundColor = .ypBlack
         addSubviews()
         makeConstraints()
+        guard let token = OAuth2TokenStorage().token else { return }
+        imagesListService.fetchPhotosNextPage(token) { result in
+            switch result {
+            case let .success(photos):
+                self.photos = photos
+            case let .failure(error):
+                print("error")
+            }
+        }
     }
     
     private func addSubviews() {
@@ -51,7 +63,7 @@ final class ImagesListViewController: UIViewController {
 
 extension ImagesListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        photosName.count
+        imagesListService.photos.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -73,38 +85,33 @@ extension ImagesListViewController: UITableViewDataSource {
     }
 }
 
+extension ImagesListViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let imageSize = imagesListService.photos[indexPath.row].size
+        let imageInsets = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)
+        let imageViewWidth = tableView.bounds.width - imageInsets.left - imageInsets.right
+        let scale = imageViewWidth / imageSize.width
+        return imageSize.height * scale + imageInsets.top + imageInsets.bottom
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let imageURL = URL(string: imagesListService.photos[indexPath.row].largeImageURL) else { return }
+        let viewController = SingleImageViewController()
+        viewController.imageURL = imageURL
+        viewController.modalPresentationStyle = .fullScreen
+        present(viewController, animated: true)
+    }
+}
+
 extension ImagesListViewController {
     func configCell(for cell: ImagesListCell, with indexPath: IndexPath) {
-        guard let image = UIImage(named: photosName[indexPath.row]) else {
-            return
-        }
+        guard let url = URL(string: imagesListService.photos[indexPath.row].thumbImageURL) else { return }
         
         cell.configure(
             isLiked: indexPath.row % 2 == 0,
             date: dateFormatter.string(from: Date()),
-            image: image
+            imageURL: url
         )
-    }
-}
-
-extension ImagesListViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        guard let image = UIImage(named: photosName[indexPath.row]) else {
-            return 0
-        }
-        
-        let imageInsets = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)
-        let imageViewWidth = tableView.bounds.width - imageInsets.left - imageInsets.right
-        let scale = imageViewWidth / image.size.width
-        
-        return image.size.height * scale + imageInsets.top + imageInsets.bottom
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let viewController = SingleImageViewController()
-        let image = UIImage(named: photosName[indexPath.row])
-        viewController.image = image
-        viewController.modalPresentationStyle = .fullScreen
-        present(viewController, animated: true)
     }
 }

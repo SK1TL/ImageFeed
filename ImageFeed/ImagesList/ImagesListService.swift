@@ -20,29 +20,30 @@ final class ImagesListService {
     
     private init() {}
     
-    func fetchPhotoNextPage(_ token: String, completion: @escaping (Result<[Photo], Error>) -> Void) {
+    func fetchPhotosNextPage(_ token: String, completion: @escaping (Result<[Photo], Error>) -> Void) {
         if task == nil {
             let nextPage = lastLoadedPage == nil ? 1 : lastLoadedPage! + 1
             let request = imagesListRequest(token: token, page: nextPage)
             let task = urlSession.objectTask(
                 for: request,
-                completion: {[weak self] (result: Result<[PhotoResult], Error>) in
-                guard let self else { return }
-                switch result {
-                case  let .success(PhotoResult):
-                    photos.append(contentsOf: PhotoResult.map({Photo(photo: $0)}))
-                    self.lastLoadedPage = nextPage
-                    self.task = nil
-                    completion(.success(photos))
-                    NotificationCenter.default
-                        .post(
-                            name: ImagesListService.didChangeNotification,
-                            object: self,
-                            userInfo: ["Photos" : photos])
-                case let .failure(error):
-                    completion(.failure(error))
+                completion: { [weak self] (result: Result<[PhotoResult], Error>) in
+                    guard let self else { return }
+                    switch result {
+                    case let .success(PhotoResult):
+                        photos.append(contentsOf: PhotoResult.map({Photo(photo: $0)}))
+                        self.lastLoadedPage = nextPage
+                        self.task = nil
+                        completion(.success(photos))
+                        NotificationCenter.default
+                            .post(
+                                name: ImagesListService.didChangeNotification,
+                                object: self,
+                                userInfo: ["Photos" : photos])
+                    case let .failure(error):
+                        completion(.failure(error))
+                    }
                 }
-            })
+            )
             self.task = task
             task.resume()
         }

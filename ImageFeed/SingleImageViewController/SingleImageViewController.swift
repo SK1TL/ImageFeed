@@ -6,12 +6,16 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class SingleImageViewController: UIViewController {
     
-    var image: UIImage! {
+    var imageURL: URL?
+    
+    private var alertPresenter: AlertPresenterProtocol?
+    
+    private var image: UIImage! = UIImage(named: "Loader") {
         didSet {
-            guard isViewLoaded else {return}
             imageView.image = image
             rescaleAndCenterImageInScrollView(image: image)
         }
@@ -50,10 +54,13 @@ final class SingleImageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        alertPresenter = AlertPresenter(viewController: self)
         view.backgroundColor = .ypBlack
-        setupUIImage()
         addSubviews()
         makeConstraints()
+        configureScrollView()
+        downloadImage()
+        
     }
     
     override func viewDidLayoutSubviews() {
@@ -91,6 +98,38 @@ final class SingleImageViewController: UIViewController {
         ])
     }
     
+    private func downloadImage() {
+        guard let imageURL else { return }
+        Kingfisher.ImageDownloader.default.downloadImage(
+            with: imageURL
+        ) { receivedSize, totalSize in
+            UIBlockingProgressHUD.show()
+        } completionHandler: { [weak self] result in
+            UIBlockingProgressHUD.dismiss()
+            guard let self else { return }
+            switch result {
+            case let .success(imageResult):
+                self.image = imageResult.image
+            case let .failure(error):
+                presentAlert()
+                print(error)
+            }
+        }
+    }
+    
+    private func presentAlert() {
+        let alertModel = AlertModel(
+            title: "Ошибка фото",
+            message: "Не удалось загрузить фотографию",
+            buttonText: "Ок",
+            error: nil
+        ) { [weak self] _ in
+            guard let self else { return }
+            self.dismiss(animated: true)
+        }
+        alertPresenter?.showAlert(model: alertModel)
+    }
+    
     @objc private func didTapBackButton() {
         dismiss(animated: true, completion: nil)
     }
@@ -105,16 +144,6 @@ final class SingleImageViewController: UIViewController {
 }
 
 private extension SingleImageViewController {
-    
-    func setupUIImage() {
-        configureImageView()
-        configureScrollView()
-    }
-    
-    func configureImageView() {
-        imageView.image = image
-        rescaleAndCenterImageInScrollView(image: image)
-    }
     
     func configureScrollView() {
         scrollView.minimumZoomScale = 0.1
@@ -152,7 +181,7 @@ private extension SingleImageViewController {
 
 extension SingleImageViewController: UIScrollViewDelegate {
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
-        return imageView
+        imageView
     }
     
     func scrollViewDidZoom(_ scrollView: UIScrollView) {

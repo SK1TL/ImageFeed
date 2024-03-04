@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class ImagesListCell: UITableViewCell {
     
@@ -67,9 +68,9 @@ final class ImagesListCell: UITableViewCell {
         ])
     }
     
-    func configure(isLiked: Bool, date: String, image: UIImage) {
+    func configure(isLiked: Bool, date: String, imageURL: URL) {
         likeButton.setImage(isLiked ? UIImage(named: "Active") : UIImage(named: "No Active"), for: .normal)
         dateLabel.text = date
-        cellImage.image = image
+        cellImage.kf.setImage(with: imageURL, placeholder: UIImage(named: "Loader"))
     }
 }
