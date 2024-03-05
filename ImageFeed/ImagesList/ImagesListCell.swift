@@ -12,6 +12,8 @@ final class ImagesListCell: UITableViewCell {
     
     static let reuseIdentifier = "ImagesListCell"
     
+    weak var delegate: ImageListCellDelegate?
+    
     private lazy var cellImage: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.cornerRadius = 16
@@ -36,7 +38,7 @@ final class ImagesListCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        contentView.backgroundColor = .ypBlack
+        backgroundColor = .ypBlack
         addSubviews()
         makeConstraints()
     }

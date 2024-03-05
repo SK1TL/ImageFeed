@@ -10,7 +10,14 @@ import Kingfisher
 
 final class ImagesListViewController: UIViewController {
     
-    private var photos: [Photo] = []
+    private var imagesListServiceObserver: NSObjectProtocol?
+    private var photos: [Photo] = [] {
+        didSet {
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
+    }
     private let imagesListService = ImagesListService.shared
     private let placeholder = UIImage(named: "Loader")
     
@@ -19,6 +26,7 @@ final class ImagesListViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.backgroundColor = .clear
+        tableView.separatorStyle = .none
         tableView.register(ImagesListCell.self, forCellReuseIdentifier: ImagesListCell.reuseIdentifier)
         tableView.translatesAutoresizingMaskIntoConstraints = false
        return tableView
@@ -36,15 +44,17 @@ final class ImagesListViewController: UIViewController {
         view.backgroundColor = .ypBlack
         addSubviews()
         makeConstraints()
-        guard let token = OAuth2TokenStorage().token else { return }
-        imagesListService.fetchPhotosNextPage(token) { result in
-            switch result {
-            case let .success(photos):
+        imagesListServiceObserver = NotificationCenter.default
+            .addObserver(
+                forName: ImagesListService.didChangeNotification,
+                object: nil,
+                queue: .main
+            ) { [weak self] _ in
+                guard let self else { return }
                 self.photos = photos
-            case let .failure(error):
-                print("error")
             }
-        }
+        guard let token = OAuth2TokenStorage().token else { return }
+        imagesListService.fetchPhotosNextPage(token: token)
     }
     
     private func addSubviews() {
