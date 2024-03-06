@@ -21,7 +21,7 @@ final class ProfileImageService {
         
         guard 
             task == nil,
-            let token = OAuth2TokenStorage().token
+            let token = OAuth2TokenStorage.shared.token
         else { return }
         
         var request = URLRequest.makeHTTPRequest(path: "/users/\(username)", httpMethod: "GET")

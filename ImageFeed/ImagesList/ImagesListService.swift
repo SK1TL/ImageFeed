@@ -39,7 +39,7 @@ final class ImagesListService {
                                 object: self,
                                 userInfo: ["Photos" : photos]
                             )
-                    case let .failure(error):
+                    case .failure:
                         return
                     }
                 }
@@ -49,15 +49,24 @@ final class ImagesListService {
         }
     }
     
-    func changeLike(_ token: String, photoId: String, isLike: Bool, completion: @escaping (Result<Void, Error>) -> Void) {
-        let request = changeLikeRequest(token: token, photoId: photoId, isLike: isLike)
+    func changeLike(
+        _ token: String,
+        photoId: String,
+        isLike: Bool,
+        completion: @escaping (Result<Void, Error>) -> Void
+    ) {
+        let request = changeLikeRequest(
+            token: token,
+            photoId: photoId,
+            isLike: isLike
+        )
         let task = urlSession.objectTask(
             for: request,
             completion: { [weak self] (result: Result<LikePhotoResult, Error>) in
             guard let self else { return }
             switch result {
             case let .success(photoResult):
-                if let index = self.photos.firstIndex(where: { $0.id == photoId }) {
+                if let index = self.photos.firstIndex(where: { $0.id == photoId }) {                    
                     photos[index] = Photo(photo: photoResult.photo)
                 }
                 completion(.success(()))

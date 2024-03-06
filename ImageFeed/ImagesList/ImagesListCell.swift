@@ -12,7 +12,7 @@ final class ImagesListCell: UITableViewCell {
     
     static let reuseIdentifier = "ImagesListCell"
     
-    weak var delegate: ImageListCellDelegate?
+    weak var delegate: ImagesListCellDelegate?
     
     private lazy var cellImage: UIImageView = {
         let imageView = UIImageView()
@@ -32,6 +32,7 @@ final class ImagesListCell: UITableViewCell {
     
     private lazy var likeButton: UIButton = {
         let button = UIButton()
+        button.addTarget(self, action: #selector(didTapLikeButton), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -45,6 +46,21 @@ final class ImagesListCell: UITableViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        cellImage.kf.cancelDownloadTask()
+    }
+    
+    func configure(isLiked: Bool, date: String, imageURL: URL) {
+        likeButton.setImage(isLiked ? UIImage(named: "likeActive") : UIImage(named: "likeNoActive"), for: .normal)
+        dateLabel.text = date
+        cellImage.kf.setImage(with: imageURL, placeholder: UIImage(named: "Loader"))
+    }
+    
+    func setIsLiked(_ isLiked: Bool) {
+        likeButton.setImage(isLiked ? UIImage(named: "likeActive") : UIImage(named: "likeNoActive"), for: .normal)
     }
     
     private func addSubviews() {
@@ -70,9 +86,7 @@ final class ImagesListCell: UITableViewCell {
         ])
     }
     
-    func configure(isLiked: Bool, date: String, imageURL: URL) {
-        likeButton.setImage(isLiked ? UIImage(named: "Active") : UIImage(named: "No Active"), for: .normal)
-        dateLabel.text = date
-        cellImage.kf.setImage(with: imageURL, placeholder: UIImage(named: "Loader"))
+    @objc private func didTapLikeButton() {
+        delegate?.imagesListCellDidTapLiked(self)
     }
 }

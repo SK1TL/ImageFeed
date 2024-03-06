@@ -7,6 +7,6 @@
 
 import Foundation
 
-protocol ImageListCellDelegate: AnyObject {
-    func imageListCellDidTapLiked(_ cell: ImagesListCell)
+protocol ImagesListCellDelegate: AnyObject {
+    func imagesListCellDidTapLiked(_ cell: ImagesListCell)
 }

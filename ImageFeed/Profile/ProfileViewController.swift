@@ -117,12 +117,15 @@ final class ProfileViewController: UIViewController {
     }
     
     private func configureViews() {
-        let profile = profileService.profile
-        
+        let profile = profileService.profile        
         userNameLabel.text = profile?.name
         descriptionLabel.text = profile?.bio
         loginLabel.text = profile?.loginName
     }
     
-    @objc private func didTapLogoutButton() {}
+    @objc private func didTapLogoutButton() {
+        ProfileLogoutService.shared.logout()
+        guard let window = UIApplication.shared.windows.first else { fatalError("Invalid Configuration") }
+        window.rootViewController = AuthViewController()
+    }
 }
