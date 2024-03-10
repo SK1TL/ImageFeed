@@ -7,6 +7,7 @@
 
 import UIKit
 import Kingfisher
+import WebKit
 
 final class ProfileViewController: UIViewController {
     
@@ -117,15 +118,36 @@ final class ProfileViewController: UIViewController {
     }
     
     private func configureViews() {
-        let profile = profileService.profile        
+        let profile = profileService.profile
         userNameLabel.text = profile?.name
         descriptionLabel.text = profile?.bio
         loginLabel.text = profile?.loginName
     }
     
     @objc private func didTapLogoutButton() {
-        ProfileLogoutService.shared.logout()
+        let alert = UIAlertController(title: "И это все?", message: "Уверены что хотите выйти?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Выход!", style: .default, handler: { [weak self] _ in
+            guard let self else { return }
+            self.logout()
+        }))
+        alert.addAction(UIAlertAction(title: "Остаюсь", style: .default))
+        present(alert, animated: true)
+    }
+    
+    private func logout() {
+        OAuth2TokenStorage.shared.token = ""
+        HTTPCookieStorage.shared.removeCookies(since: Date.distantPast)
+        WKWebsiteDataStore.default().fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { records in
+            records.forEach { record in
+                WKWebsiteDataStore.default().removeData(ofTypes: record.dataTypes, for: [record], completionHandler: {})
+            }
+        }
+        switchToSplashScreen()
+    }
+    
+    private func switchToSplashScreen() {
         guard let window = UIApplication.shared.windows.first else { fatalError("Invalid Configuration") }
+        let splashScreenController = SplashViewController()
         window.rootViewController = AuthViewController()
     }
 }
