@@ -11,12 +11,14 @@ import WebKit
 
 final class ProfileViewController: UIViewController {
     
-    private let profileService = ProfileService.shared    
+    private let imageListService = ImagesListService.shared
+    private let profileService = ProfileService.shared
+    private var alertPresenter: AlertPresenter?
     private var profileImageServiceObserver: NSObjectProtocol?
     
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "Photo")
+        imageView.image = UIImage(named: "user_avatar")
         imageView.layer.cornerRadius = 35
         imageView.layer.masksToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -81,7 +83,7 @@ final class ProfileViewController: UIViewController {
     
     private func updateAvatar() {
         guard let url = URL(string: ProfileImageService.shared.avatarURL) else { return }
-        imageView.kf.indicatorType = .activity        
+        imageView.kf.indicatorType = .activity
         imageView.kf.setImage(
             with: url,
             placeholder: UIImage(named: "user_avatar")
@@ -125,29 +127,49 @@ final class ProfileViewController: UIViewController {
     }
     
     @objc private func didTapLogoutButton() {
-        let alert = UIAlertController(title: "И это все?", message: "Уверены что хотите выйти?", preferredStyle: .alert)
+        
+        let alert = UIAlertController(title: "Пока, пока!", message: "Уверены что хотите выйти?", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Выход!", style: .default, handler: { [weak self] _ in
             guard let self else { return }
-            self.logout()
+            resetAccount()
         }))
         alert.addAction(UIAlertAction(title: "Остаюсь", style: .default))
+        
         present(alert, animated: true)
     }
     
-    private func logout() {
-        OAuth2TokenStorage.shared.token = ""
+    private func switchToSplashViewController() {
+        guard let window = UIApplication.shared.windows.first else { fatalError("Invalid Configuration") }
+        window.rootViewController = SplashViewController()
+    }
+}
+
+private extension ProfileViewController {
+    
+    func resetAccount() {
+        resetToken()
+        resetPhotos()
+        resetCookies()
+        switchToSplashViewController()
+    }
+    
+    func resetToken() {
+        guard OAuth2TokenStorage.shared.removeToken() else {
+            assertionFailure("Cannot remove token")
+            return
+        }
+    }
+    
+    func resetPhotos() {
+        ImagesListService.shared.resetPhotos()
+    }
+    
+    func resetCookies() {
         HTTPCookieStorage.shared.removeCookies(since: Date.distantPast)
         WKWebsiteDataStore.default().fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { records in
             records.forEach { record in
-                WKWebsiteDataStore.default().removeData(ofTypes: record.dataTypes, for: [record], completionHandler: {})
+                WKWebsiteDataStore.default().removeData(ofTypes: record.dataTypes, for: [record]) { }
             }
         }
-        switchToSplashScreen()
-    }
-    
-    private func switchToSplashScreen() {
-        guard let window = UIApplication.shared.windows.first else { fatalError("Invalid Configuration") }
-        let splashScreenController = SplashViewController()
-        window.rootViewController = AuthViewController()
     }
 }

@@ -60,21 +60,26 @@ final class ImagesListService {
             photoId: photoId,
             isLike: isLike
         )
+        
         let task = urlSession.objectTask(
             for: request,
             completion: { [weak self] (result: Result<LikePhotoResult, Error>) in
-            guard let self else { return }
-            switch result {
-            case let .success(photoResult):
-                if let index = self.photos.firstIndex(where: { $0.id == photoId }) {                    
-                    photos[index] = Photo(photo: photoResult.photo)
+                guard let self else { return }
+                switch result {
+                case let .success(photoResult):
+                    if let index = self.photos.firstIndex(where: { $0.id == photoId }) {
+                        photos[index] = Photo(photo: photoResult.photo)
+                    }
+                    completion(.success(()))
+                case let .failure(error):
+                    completion(.failure(error))
                 }
-                completion(.success(()))
-            case let .failure(error):
-                completion(.failure(error))
-            }
-        })
+            })
         task.resume()
+    }
+    
+    func resetPhotos() {
+        photos = []
     }
 }
 

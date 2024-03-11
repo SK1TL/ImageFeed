@@ -19,7 +19,7 @@ final class ProfileImageService {
     func fetchProfileImageURL(username: String, completion: @escaping (Result<String, Error>) -> Void) {
         assert(Thread.isMainThread)
         
-        guard 
+        guard
             task == nil,
             let token = OAuth2TokenStorage.shared.token
         else { return }
@@ -31,10 +31,11 @@ final class ProfileImageService {
                 completion(result)
             }
         }
+        
         let task = urlSession.objectTask(for: request) { [weak self] (result: Result<UserResult, Error>) in
             guard let self else { return }
             switch result {
-            case let .success(userResult):                
+            case let .success(userResult):
                 guard let avatarURL = userResult.profileImage?.small else { return }
                 self.avatarURL = avatarURL
                 completionOnMainThread(.success(avatarURL))
