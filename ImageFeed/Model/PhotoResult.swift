@@ -8,7 +8,15 @@
 import Foundation
 
 struct Photo {
-    init(id: String, size: CGSize, createdAt: Date?, welcomeDescription: String?, thumbImageURL: String, largeImageURL: String, isLiked: Bool) {
+    init(
+        id: String,
+        size: CGSize,
+        createdAt: Date?,
+        welcomeDescription: String?,
+        thumbImageURL: String,
+        largeImageURL: String,
+        isLiked: Bool
+    ) {
         self.id = id
         self.size = size
         self.createdAt = createdAt

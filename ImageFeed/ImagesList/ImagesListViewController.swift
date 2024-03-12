@@ -46,19 +46,8 @@ final class ImagesListViewController: UIViewController {
         view.backgroundColor = .ypBlack
         addSubviews()
         makeConstraints()
-        imagesListServiceObserver = NotificationCenter.default
-            .addObserver(
-                forName: ImagesListService.didChangeNotification,
-                object: nil,
-                queue: .main
-            ) { [weak self] notification in
-                guard let self else { return }
-                if let images = notification.userInfo?["Photos"] as? [Photo] {
-                    self.photos = images
-                }
-            }
-        
-        fetchPhotosNextPage()
+        setupNotificationObserver()
+        setupImageListService()
     }
     
     private func fetchPhotosNextPage() {
@@ -77,6 +66,37 @@ final class ImagesListViewController: UIViewController {
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
+    }
+    
+    private func setupImageListService() {
+        updateTableViewAnimated()
+        fetchPhotosNextPage()
+    }
+    
+    private func setupNotificationObserver() {
+      imagesListServiceObserver = NotificationCenter.default
+        .addObserver(
+          forName: ImagesListService.didChangeNotification,
+          object: nil,
+          queue: .main
+        ) { [weak self] _ in
+          self?.updateTableViewAnimated()
+        }
+    }
+    
+    private func updateTableViewAnimated() {
+        let oldCount = photos.count
+        photos = imagesListService.photos
+        let newCount = photos.count
+        
+        if oldCount != newCount {
+            tableView.performBatchUpdates {
+                let indexes = (oldCount..<newCount).map { index in
+                    IndexPath(row: index, section: 0)
+                }
+                tableView.insertRows(at: indexes, with: .automatic)
+            }
+        }
     }
 }
 
