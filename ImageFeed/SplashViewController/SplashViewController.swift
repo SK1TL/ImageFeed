@@ -33,7 +33,6 @@ final class SplashViewController: UIViewController {
         super.viewDidAppear(animated)
         
         if let token = OAuth2TokenStorage.shared.token {
-            UIBlockingProgressHUD.show()
             fetchProfile(token)
         } else {
             let authVC = AuthViewController()
