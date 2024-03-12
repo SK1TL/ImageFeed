@@ -42,6 +42,7 @@
 		853127F82B8D183A008589D5 /* URLRequest+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853127F72B8D183A008589D5 /* URLRequest+Extension.swift */; };
 		853127FA2B8D25E4008589D5 /* UserResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853127F92B8D25E4008589D5 /* UserResult.swift */; };
 		853128392B910173008589D5 /* ImagesListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853128382B910173008589D5 /* ImagesListService.swift */; };
+		85B651D02BA0C5D2003C83C2 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B651CF2BA0C5D2003C83C2 /* Photo.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -79,6 +80,7 @@
 		853127F72B8D183A008589D5 /* URLRequest+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLRequest+Extension.swift"; sourceTree = "<group>"; };
 		853127F92B8D25E4008589D5 /* UserResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserResult.swift; sourceTree = "<group>"; };
 		853128382B910173008589D5 /* ImagesListService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListService.swift; sourceTree = "<group>"; };
+		85B651CF2BA0C5D2003C83C2 /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -235,6 +237,7 @@
 				853127F92B8D25E4008589D5 /* UserResult.swift */,
 				8510D90E2B9375F7003937FA /* PhotoResult.swift */,
 				8510D9102B93AFD0003937FA /* Date+Extension.swift */,
+				85B651CF2BA0C5D2003C83C2 /* Photo.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -336,6 +339,7 @@
 				853127D02B7787A6008589D5 /* SplashViewController.swift in Sources */,
 				851A0B2A2B432371003E6D97 /* AppDelegate.swift in Sources */,
 				8510D9222B9655EE003937FA /* ImageListCellDelegate.swift in Sources */,
+				85B651D02BA0C5D2003C83C2 /* Photo.swift in Sources */,
 				8510D9112B93AFD0003937FA /* Date+Extension.swift in Sources */,
 				8531278B2B75510A008589D5 /* OAuth2Service.swift in Sources */,
 				853127DE2B83E5F6008589D5 /* ProfileImageService.swift in Sources */,

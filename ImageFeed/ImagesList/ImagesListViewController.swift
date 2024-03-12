@@ -12,13 +12,7 @@ final class ImagesListViewController: UIViewController {
     
     private var alertPresenter: AlertPresenterProtocol?
     private var imagesListServiceObserver: NSObjectProtocol?
-    private var photos: [Photo] = [] {
-        didSet {
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
-        }
-    }
+    private var photos: [Photo] = []
     private let tokenStorage = OAuth2TokenStorage.shared
     private let imagesListService = ImagesListService.shared
     private let placeholder = UIImage(named: "Loader")
@@ -91,8 +85,8 @@ final class ImagesListViewController: UIViewController {
         
         if oldCount != newCount {
             tableView.performBatchUpdates {
-                let indexes = (oldCount..<newCount).map { index in
-                    IndexPath(row: index, section: 0)
+                let indexes = (oldCount..<newCount).map {
+                    IndexPath(row: $0, section: 0)
                 }
                 tableView.insertRows(at: indexes, with: .automatic)
             }
@@ -154,9 +148,15 @@ extension ImagesListViewController {
         let photo = photos[indexPath.row]
         guard let url = URL(string: photo.thumbImageURL) else { return }
         
+        var dateString: String? = nil
+        
+        if let createdAt = photo.createdAt {
+            dateString = dateFormatter.string(from: createdAt)
+        }
+        
         cell.configure(
             isLiked: photo.isLiked,
-            date: dateFormatter.string(from: photo.createdAt ?? Date()),
+            date: dateString,
             imageURL: url
         )
     }
@@ -178,7 +178,7 @@ extension ImagesListViewController: ImagesListCellDelegate {
             }
             guard let self else { return }
             switch result {
-            case .success(_):
+            case .success:
                 DispatchQueue.main.async {
                     cell.setIsLiked(!photo.isLiked)
                     if let index = self.photos.firstIndex(where: { $0.id == photo.id }) {

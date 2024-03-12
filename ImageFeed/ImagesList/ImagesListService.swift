@@ -24,26 +24,23 @@ final class ImagesListService {
         if task == nil {
             let nextPage = lastLoadedPage == nil ? 1 : lastLoadedPage! + 1
             let request = imagesListRequest(token: token, page: nextPage)
-            let task = urlSession.objectTask(
-                for: request,
-                completion: { [weak self] (result: Result<[PhotoResult], Error>) in
-                    guard let self else { return }
-                    switch result {
-                    case let .success(PhotoResult):
-                        photos.append(contentsOf: PhotoResult.map({Photo(photo: $0)}))
-                        self.lastLoadedPage = nextPage
-                        self.task = nil
-                        NotificationCenter.default
-                            .post(
-                                name: ImagesListService.didChangeNotification,
-                                object: self,
-                                userInfo: ["Photos" : photos]
-                            )
-                    case .failure:
-                        return
-                    }
+            let task = urlSession.objectTask(for: request) { [weak self] (result: Result<[PhotoResult], Error>) in
+                guard let self else { return }
+                self.task = nil
+                switch result {
+                case let .success(PhotoResult):
+                    photos.append(contentsOf: PhotoResult.map({Photo(photo: $0)}))
+                    self.lastLoadedPage = nextPage
+                    NotificationCenter.default
+                        .post(
+                            name: ImagesListService.didChangeNotification,
+                            object: self,
+                            userInfo: ["Photos" : photos]
+                        )
+                case .failure:
+                    return
                 }
-            )
+            }
             self.task = task
             task.resume()
         }
@@ -61,20 +58,18 @@ final class ImagesListService {
             isLike: isLike
         )
         
-        let task = urlSession.objectTask(
-            for: request,
-            completion: { [weak self] (result: Result<LikePhotoResult, Error>) in
-                guard let self else { return }
-                switch result {
-                case let .success(photoResult):
-                    if let index = self.photos.firstIndex(where: { $0.id == photoId }) {
-                        photos[index] = Photo(photo: photoResult.photo)
-                    }
-                    completion(.success(()))
-                case let .failure(error):
-                    completion(.failure(error))
+        let task = urlSession.objectTask(for: request) { [weak self] (result: Result<LikePhotoResult, Error>) in
+            guard let self else { return }
+            switch result {
+            case let .success(photoResult):
+                if let index = self.photos.firstIndex(where: { $0.id == photoId }) {
+                    photos[index] = Photo(photo: photoResult.photo)
                 }
-            })
+                completion(.success(()))
+            case let .failure(error):
+                completion(.failure(error))
+            }
+        }
         task.resume()
     }
     

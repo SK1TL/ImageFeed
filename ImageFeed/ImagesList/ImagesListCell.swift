@@ -53,7 +53,7 @@ final class ImagesListCell: UITableViewCell {
         cellImage.kf.cancelDownloadTask()
     }
     
-    func configure(isLiked: Bool, date: String, imageURL: URL) {
+    func configure(isLiked: Bool, date: String?, imageURL: URL) {
         likeButton.setImage(isLiked ? UIImage(named: "likeActive") : UIImage(named: "likeNoActive"), for: .normal)
         dateLabel.text = date
         cellImage.kf.setImage(with: imageURL, placeholder: UIImage(named: "Loader"))

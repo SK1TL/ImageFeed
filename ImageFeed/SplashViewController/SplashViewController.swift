@@ -33,6 +33,7 @@ final class SplashViewController: UIViewController {
         super.viewDidAppear(animated)
         
         if let token = OAuth2TokenStorage.shared.token {
+            UIBlockingProgressHUD.show()
             fetchProfile(token)
         } else {
             let authVC = AuthViewController()
@@ -60,6 +61,7 @@ final class SplashViewController: UIViewController {
     }
     
     private func fetchOAuthToken(_ code: String) {
+        UIBlockingProgressHUD.show()
         OAuth2Service.shared.fetchOAuthToken(code) { [weak self] result in
             guard let self else { return }
             switch result {
@@ -75,9 +77,9 @@ final class SplashViewController: UIViewController {
     private func fetchProfile(_ token: String) {
         profileService.fetchProfile(token) { [weak self] result in
             guard let self else { return }
+            UIBlockingProgressHUD.dismiss()
             switch result {
             case let .success(profile):
-                UIBlockingProgressHUD.dismiss()
                 ProfileImageService.shared.fetchProfileImageURL(username: profile.userName) { _ in }
                 self.switchToTabBarController()
             case .failure:
@@ -87,6 +89,7 @@ final class SplashViewController: UIViewController {
     }
     
     private func showAlert(parameter: String, _ problem: ProblemType) {
+        UIBlockingProgressHUD.dismiss()
         let alertModel = AlertModel(
             title: "Что-то пошло не так(",
             message: "Не удалось войти в систему",
@@ -109,7 +112,6 @@ final class SplashViewController: UIViewController {
 
 extension SplashViewController: AuthViewControllerDelegate {
     func authViewController(_ vc: AuthViewController, didAuthenticateWithCode code: String) {
-        UIBlockingProgressHUD.show()
         fetchOAuthToken(code)
     }
 }

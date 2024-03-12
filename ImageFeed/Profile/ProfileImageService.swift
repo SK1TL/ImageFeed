@@ -8,8 +8,10 @@
 import UIKit
 
 final class ProfileImageService {
+    
     static let didChangeNotification = Notification.Name(rawValue: "ProfileImageProviderDidChange")
     static let shared = ProfileImageService()
+    
     private let urlSession = URLSession.shared
     private (set) var avatarURL: String = ""
     private var task: URLSessionTask?
@@ -34,6 +36,7 @@ final class ProfileImageService {
         
         let task = urlSession.objectTask(for: request) { [weak self] (result: Result<UserResult, Error>) in
             guard let self else { return }
+            self.task = nil
             switch result {
             case let .success(userResult):
                 guard let avatarURL = userResult.profileImage?.small else { return }
@@ -46,9 +49,7 @@ final class ProfileImageService {
                         userInfo: ["URL": avatarURL]
                     )
             case let .failure(error):
-                self.task = nil
                 completionOnMainThread(.failure(error))
-                
             }
         }
         self.task = task

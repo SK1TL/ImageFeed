@@ -10,7 +10,8 @@ import Foundation
 private let dateTimePhotoFormatter = ISO8601DateFormatter()
 
 extension Date {
-    static func dateFromString(_ date: String) -> Date? {
-        dateTimePhotoFormatter.date(from: date)
+    static func dateFromString(_ date: String?) -> Date? {
+        guard let date else { return nil }
+        return dateTimePhotoFormatter.date(from: date)
     }
 }

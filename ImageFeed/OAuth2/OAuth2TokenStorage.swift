@@ -25,9 +25,6 @@ final class OAuth2TokenStorage {
     }
     
     private init() {}
-}
-
-extension OAuth2TokenStorage {
     
     func removeToken() -> Bool {
         KeychainWrapper.standard.removeObject(forKey: key)
