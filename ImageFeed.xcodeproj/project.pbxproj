@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8510D90F2B9375F7003937FA /* PhotoResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8510D90E2B9375F7003937FA /* PhotoResult.swift */; };
+		8510D9112B93AFD0003937FA /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8510D9102B93AFD0003937FA /* Date+Extension.swift */; };
+		8510D9222B9655EE003937FA /* ImageListCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8510D9212B9655EE003937FA /* ImageListCellDelegate.swift */; };
 		851A0B2A2B432371003E6D97 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851A0B292B432371003E6D97 /* AppDelegate.swift */; };
 		851A0B2C2B432371003E6D97 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851A0B2B2B432371003E6D97 /* SceneDelegate.swift */; };
 		851A0B2E2B432371003E6D97 /* ImagesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851A0B2D2B432371003E6D97 /* ImagesListViewController.swift */; };
@@ -38,9 +41,14 @@
 		853127F62B8D107D008589D5 /* ProblemType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853127F52B8D107D008589D5 /* ProblemType.swift */; };
 		853127F82B8D183A008589D5 /* URLRequest+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853127F72B8D183A008589D5 /* URLRequest+Extension.swift */; };
 		853127FA2B8D25E4008589D5 /* UserResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853127F92B8D25E4008589D5 /* UserResult.swift */; };
+		853128392B910173008589D5 /* ImagesListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853128382B910173008589D5 /* ImagesListService.swift */; };
+		85B651D02BA0C5D2003C83C2 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B651CF2BA0C5D2003C83C2 /* Photo.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8510D90E2B9375F7003937FA /* PhotoResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoResult.swift; sourceTree = "<group>"; };
+		8510D9102B93AFD0003937FA /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
+		8510D9212B9655EE003937FA /* ImageListCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageListCellDelegate.swift; sourceTree = "<group>"; };
 		851A0B262B432371003E6D97 /* ImageFeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageFeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		851A0B292B432371003E6D97 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		851A0B2B2B432371003E6D97 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -71,6 +79,8 @@
 		853127F52B8D107D008589D5 /* ProblemType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProblemType.swift; sourceTree = "<group>"; };
 		853127F72B8D183A008589D5 /* URLRequest+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLRequest+Extension.swift"; sourceTree = "<group>"; };
 		853127F92B8D25E4008589D5 /* UserResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserResult.swift; sourceTree = "<group>"; };
+		853128382B910173008589D5 /* ImagesListService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListService.swift; sourceTree = "<group>"; };
+		85B651CF2BA0C5D2003C83C2 /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,8 +137,10 @@
 		851A0B5F2B4AD3AB003E6D97 /* ImagesList */ = {
 			isa = PBXGroup;
 			children = (
+				853128382B910173008589D5 /* ImagesListService.swift */,
 				851A0B5D2B4AD373003E6D97 /* ImagesListCell.swift */,
 				851A0B2D2B432371003E6D97 /* ImagesListViewController.swift */,
+				8510D9212B9655EE003937FA /* ImageListCellDelegate.swift */,
 			);
 			path = ImagesList;
 			sourceTree = "<group>";
@@ -223,6 +235,9 @@
 				853127D92B8376FE008589D5 /* ProfileResult.swift */,
 				853127DB2B83779B008589D5 /* Profile.swift */,
 				853127F92B8D25E4008589D5 /* UserResult.swift */,
+				8510D90E2B9375F7003937FA /* PhotoResult.swift */,
+				8510D9102B93AFD0003937FA /* Date+Extension.swift */,
+				85B651CF2BA0C5D2003C83C2 /* Photo.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -316,12 +331,16 @@
 				853127F22B8602CC008589D5 /* TabBarController.swift in Sources */,
 				853127892B754F6F008589D5 /* OAuthTokenResponseBody.swift in Sources */,
 				851A0B5E2B4AD373003E6D97 /* ImagesListCell.swift in Sources */,
+				8510D90F2B9375F7003937FA /* PhotoResult.swift in Sources */,
 				851A0B842B5AC478003E6D97 /* ProfileViewController.swift in Sources */,
 				853127DC2B83779B008589D5 /* Profile.swift in Sources */,
 				853127F82B8D183A008589D5 /* URLRequest+Extension.swift in Sources */,
 				853127E02B84DACD008589D5 /* AlertModel.swift in Sources */,
 				853127D02B7787A6008589D5 /* SplashViewController.swift in Sources */,
 				851A0B2A2B432371003E6D97 /* AppDelegate.swift in Sources */,
+				8510D9222B9655EE003937FA /* ImageListCellDelegate.swift in Sources */,
+				85B651D02BA0C5D2003C83C2 /* Photo.swift in Sources */,
+				8510D9112B93AFD0003937FA /* Date+Extension.swift in Sources */,
 				8531278B2B75510A008589D5 /* OAuth2Service.swift in Sources */,
 				853127DE2B83E5F6008589D5 /* ProfileImageService.swift in Sources */,
 				853127F62B8D107D008589D5 /* ProblemType.swift in Sources */,
@@ -330,6 +349,7 @@
 				853127D52B836B42008589D5 /* UIBlokingProgressHUD.swift in Sources */,
 				853126D72B7147E7008589D5 /* Constants.swift in Sources */,
 				851A0B862B5BDE9C003E6D97 /* SingleImageViewController.swift in Sources */,
+				853128392B910173008589D5 /* ImagesListService.swift in Sources */,
 				853126DC2B726707008589D5 /* WebViewViewController.swift in Sources */,
 				853127E22B84DBC2008589D5 /* AlertPresenterProtocol.swift in Sources */,
 				851A0B2C2B432371003E6D97 /* SceneDelegate.swift in Sources */,

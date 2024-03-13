@@ -31,6 +31,7 @@ final class ProfileService {
         
         let task = urlSession.objectTask(for: request) { [weak self] (result: Result<ProfileResult, Error>) in
             guard let self else { return }
+            self.task = nil
             switch result {
             case let .success(profile):
                 self.profile = Profile(
@@ -42,7 +43,6 @@ final class ProfileService {
                 completionOnMainThread(.success(self.profile!))
             case let .failure(error):
                 completionOnMainThread(.failure(error))
-                self.task = nil
             }
         }
         self.task = task

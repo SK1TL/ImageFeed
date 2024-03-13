@@ -8,8 +8,10 @@
 import UIKit
 
 final class ProfileImageService {
+    
     static let didChangeNotification = Notification.Name(rawValue: "ProfileImageProviderDidChange")
     static let shared = ProfileImageService()
+    
     private let urlSession = URLSession.shared
     private (set) var avatarURL: String = ""
     private var task: URLSessionTask?
@@ -19,9 +21,9 @@ final class ProfileImageService {
     func fetchProfileImageURL(username: String, completion: @escaping (Result<String, Error>) -> Void) {
         assert(Thread.isMainThread)
         
-        guard 
+        guard
             task == nil,
-            let token = OAuth2TokenStorage().token
+            let token = OAuth2TokenStorage.shared.token
         else { return }
         
         var request = URLRequest.makeHTTPRequest(path: "/users/\(username)", httpMethod: "GET")
@@ -31,10 +33,12 @@ final class ProfileImageService {
                 completion(result)
             }
         }
+        
         let task = urlSession.objectTask(for: request) { [weak self] (result: Result<UserResult, Error>) in
             guard let self else { return }
+            self.task = nil
             switch result {
-            case let .success(userResult):                
+            case let .success(userResult):
                 guard let avatarURL = userResult.profileImage?.small else { return }
                 self.avatarURL = avatarURL
                 completionOnMainThread(.success(avatarURL))
@@ -45,9 +49,7 @@ final class ProfileImageService {
                         userInfo: ["URL": avatarURL]
                     )
             case let .failure(error):
-                self.task = nil
                 completionOnMainThread(.failure(error))
-                
             }
         }
         self.task = task

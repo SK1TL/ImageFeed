@@ -31,6 +31,7 @@ final class WebViewViewController: UIViewController {
     }()
     
     private var estimatedProgressObservation: NSKeyValueObservation?
+    
     weak var delegate: WebViewViewControllerDelegate?
     
     override func viewDidLoad() {
