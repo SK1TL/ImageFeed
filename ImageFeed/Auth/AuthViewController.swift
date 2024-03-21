@@ -63,9 +63,12 @@ final class AuthViewController: UIViewController {
     }
     
     @objc private func didTapLoginButton() {
-        let webViewVC = WebViewViewController()
-        webViewVC.delegate = self
-        navigationController?.pushViewController(webViewVC, animated: true)
+        let webViewViewController = WebViewViewController()
+        let webViewPresenter = WebViewPresenter()
+        webViewViewController.presenter = webViewPresenter
+        webViewPresenter.view = webViewViewController
+        webViewViewController.delegate = self
+        navigationController?.pushViewController(webViewViewController, animated: true)
     }
 }
 
