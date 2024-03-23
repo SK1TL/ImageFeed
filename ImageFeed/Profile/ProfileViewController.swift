@@ -9,12 +9,16 @@ import UIKit
 import Kingfisher
 import WebKit
 
-final class ProfileViewController: UIViewController {
+protocol ProfileViewControllerProtocol: AnyObject {
+    var presenter: ProfilePresenterProtocol? { get set }
+    func updateAvatar(url: URL)
     
-    private let imageListService = ImagesListService.shared
+}
+
+final class ProfileViewController: UIViewController & ProfileViewControllerProtocol {
+    
     private let profileService = ProfileService.shared
-    private var alertPresenter: AlertPresenter?
-    private var profileImageServiceObserver: NSObjectProtocol?
+    var presenter: ProfilePresenterProtocol?
     
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
@@ -63,26 +67,14 @@ final class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        profileImageServiceObserver = NotificationCenter.default
-            .addObserver(
-                forName: ProfileImageService.didChangeNotification,
-                object: nil,
-                queue: .main
-            ) { [weak self] _ in
-                guard let self else { return }
-                self.updateAvatar()
-            }
-        updateAvatar()
-        
         view.backgroundColor = .ypBackground
-        configureViews()
         addSubviews()
         makeConstraints()
+        presenter?.updateAvatar()
+        configureViews()
     }
     
-    private func updateAvatar() {
-        guard let url = URL(string: ProfileImageService.shared.avatarURL) else { return }
+    func updateAvatar(url: URL) {
         imageView.kf.indicatorType = .activity
         imageView.kf.setImage(
             with: url,
@@ -138,45 +130,10 @@ final class ProfileViewController: UIViewController {
                 style: .default
             ) { [weak self] _ in
                 guard let self else { return }
-                resetAccount()
+                self.presenter?.logout()
             }
         )
         alert.addAction(UIAlertAction(title: "Нет", style: .default))
         present(alert, animated: true)
-    }
-    
-    private func switchToSplashViewController() {
-        guard let window = UIApplication.shared.windows.first else { fatalError("Invalid Configuration") }
-        window.rootViewController = SplashViewController()
-    }
-}
-
-private extension ProfileViewController {
-    
-    func resetAccount() {
-        resetToken()
-        resetPhotos()
-        resetCookies()
-        switchToSplashViewController()
-    }
-    
-    func resetToken() {
-        guard OAuth2TokenStorage.shared.removeToken() else {
-            assertionFailure("Cannot remove token")
-            return
-        }
-    }
-    
-    func resetPhotos() {
-        ImagesListService.shared.resetPhotos()
-    }
-    
-    func resetCookies() {
-        HTTPCookieStorage.shared.removeCookies(since: Date.distantPast)
-        WKWebsiteDataStore.default().fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { records in
-            records.forEach { record in
-                WKWebsiteDataStore.default().removeData(ofTypes: record.dataTypes, for: [record]) { }
-            }
-        }
     }
 }
