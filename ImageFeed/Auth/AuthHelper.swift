@@ -16,7 +16,7 @@ final class AuthHelper: AuthHelperProtocol {
     
     let configurator: AuthConfiguration
     
-    init(configurator: AuthConfiguration = .standert) {
+    init(configurator: AuthConfiguration = .standard) {
         self.configurator = configurator
     }
     

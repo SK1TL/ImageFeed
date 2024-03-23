@@ -41,7 +41,7 @@ struct AuthConfiguration {
         self.authURLString = authURLString
     }
     
-    static var standert: AuthConfiguration {
+    static var standard: AuthConfiguration {
         return AuthConfiguration(
             accessKey: Constants.accessKey.rawValue,
             secretKey: Constants.secretKey.rawValue,
