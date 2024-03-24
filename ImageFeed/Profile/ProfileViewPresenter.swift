@@ -11,6 +11,7 @@ protocol ProfilePresenterProtocol {
     var view: ProfileViewControllerProtocol? { get set }
     func updateAvatar()
     func logout()
+    func viewDidLoad()
 }
 
 final class ProfilePresenter: ProfilePresenterProtocol {
@@ -24,6 +25,10 @@ final class ProfilePresenter: ProfilePresenterProtocol {
     init(logoutHelper: LogoutHelperProtocol) {
         self.logoutHelper = logoutHelper
         setupObserver()
+    }
+    
+    func viewDidLoad() {
+        view?.configureViews(profile: profileService.profile)
     }
     
     func setupObserver() {

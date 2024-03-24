@@ -9,15 +9,14 @@ import UIKit
 import Kingfisher
 import WebKit
 
-protocol ProfileViewControllerProtocol: AnyObject {
+protocol ProfileViewControllerProtocol: UIViewController {
     var presenter: ProfilePresenterProtocol? { get set }
     func updateAvatar(url: URL)
-    
+    func configureViews(profile: Profile?)
 }
 
-final class ProfileViewController: UIViewController & ProfileViewControllerProtocol {
+final class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
     
-    private let profileService = ProfileService.shared
     var presenter: ProfilePresenterProtocol?
     
     private lazy var imageView: UIImageView = {
@@ -70,8 +69,7 @@ final class ProfileViewController: UIViewController & ProfileViewControllerProto
         view.backgroundColor = .ypBackground
         addSubviews()
         makeConstraints()
-        presenter?.updateAvatar()
-        configureViews()
+        presenter?.viewDidLoad()
     }
     
     func updateAvatar(url: URL) {
@@ -111,8 +109,7 @@ final class ProfileViewController: UIViewController & ProfileViewControllerProto
         ])
     }
     
-    private func configureViews() {
-        let profile = profileService.profile
+    func configureViews(profile: Profile?) {
         userNameLabel.text = profile?.name
         descriptionLabel.text = profile?.bio
         loginLabel.text = profile?.loginName

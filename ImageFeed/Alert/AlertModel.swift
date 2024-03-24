@@ -12,5 +12,5 @@ struct AlertModel {
     let message: String
     let buttonText: String
     let error: ProblemType?
-    let completion: (ProblemType?) -> Void
+    let completion: ((ProblemType?) -> Void)?
 }
