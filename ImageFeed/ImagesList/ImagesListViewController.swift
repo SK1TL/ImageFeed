@@ -8,7 +8,7 @@
 import UIKit
 import Kingfisher
 
-protocol ImagesListViewControllerProtocol: UIViewController {
+public protocol ImagesListViewControllerProtocol: UIViewController {
     var presenter: ImagesListPresenterProtocol? { get set }
     func setCellIsLiked(by indexPath: IndexPath, isLiked: Bool)
     func presentAlert(model: AlertModel)

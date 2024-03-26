@@ -11,13 +11,13 @@ import XCTest
 final class WebViewTests: XCTestCase {
     
     func testViewControllerCallsViewDidLoad() {
-        // given
+        //given
         let viewController = WebViewViewController()
         let presenter = WebViewPresenterSpy()
         viewController.presenter = presenter
         presenter.view = viewController
         
-        // when
+        //when
         _ = viewController.view
         
         // then
@@ -25,7 +25,7 @@ final class WebViewTests: XCTestCase {
     }
     
     func testPresenterCallsLoadRequest() {
-        // given
+        //given
         let viewController = WebViewViewControllerSpy()
         let authHelper = AuthHelper()
         let presenter = WebViewPresenter(authHelper: authHelper)
@@ -35,7 +35,7 @@ final class WebViewTests: XCTestCase {
         //when
         presenter.viewDidLoad()
         
-        // then
+        //then
         XCTAssertTrue(viewController.viewDidLoadRequest)
     }
     

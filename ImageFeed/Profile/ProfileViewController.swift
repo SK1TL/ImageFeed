@@ -9,7 +9,7 @@ import UIKit
 import Kingfisher
 import WebKit
 
-protocol ProfileViewControllerProtocol: UIViewController {
+public protocol ProfileViewControllerProtocol: UIViewController {
     var presenter: ProfilePresenterProtocol? { get set }
     func updateAvatar(url: URL)
     func configureViews(profile: Profile?)
@@ -34,6 +34,7 @@ final class ProfileViewController: UIViewController, ProfileViewControllerProtoc
         label.textColor = .ypWhite
         label.font = UIFont.systemFont(ofSize: 23, weight: .bold)
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.accessibilityIdentifier = "Name Lastname"
         return label
     }()
     
@@ -43,6 +44,7 @@ final class ProfileViewController: UIViewController, ProfileViewControllerProtoc
         label.textColor = .ypGray
         label.font = UIFont.systemFont(ofSize: 13, weight: .medium)
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.accessibilityIdentifier = "@username"
         return label
     }()
     
@@ -61,6 +63,7 @@ final class ProfileViewController: UIViewController, ProfileViewControllerProtoc
         button.addTarget(self, action: #selector(didTapLogoutButton), for: .touchUpInside)
         button.tintColor = .red
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.accessibilityIdentifier = "logout button"
         return button
     }()
     
@@ -121,16 +124,18 @@ final class ProfileViewController: UIViewController, ProfileViewControllerProtoc
             message: "Уверены что хотите выйти?",
             preferredStyle: .alert
         )
-        alert.addAction(
-            UIAlertAction(
-                title: "Да",
-                style: .default
-            ) { [weak self] _ in
-                guard let self else { return }
-                self.presenter?.logout()
-            }
-        )
+        let yesAction = UIAlertAction(
+            title: "Да",
+            style: .default
+        ) { [weak self] _ in
+            guard let self else { return }
+            self.presenter?.logout()
+        }
+        yesAction.accessibilityIdentifier = "yesButton"
+        alert.addAction(yesAction)
+        
         alert.addAction(UIAlertAction(title: "Нет", style: .default))
+        alert.view.accessibilityIdentifier = "logoutAlert"
         present(alert, animated: true)
     }
 }
