@@ -125,7 +125,6 @@ extension ImagesListViewController: UITableViewDataSource {
 }
 
 extension ImagesListViewController: UITableViewDelegate {
-    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let imageSize = presenter?.photos[indexPath.row].size ?? .zero
         let imageInsets = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)
@@ -135,7 +134,7 @@ extension ImagesListViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard 
+        guard
             let largeImageURL = presenter?.photos[indexPath.row].largeImageURL,
             let imageURL = URL(string: largeImageURL)
         else { return }
@@ -156,7 +155,7 @@ extension ImagesListViewController {
     func configCell(for cell: ImagesListCell, with indexPath: IndexPath) {
         guard
             let photo = presenter?.photos[indexPath.row],
-            let url = URL(string: photo.thumbImageURL) 
+            let url = URL(string: photo.thumbImageURL)
         else { return }
         
         var dateString: String? = nil

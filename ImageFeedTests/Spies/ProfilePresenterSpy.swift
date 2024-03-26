@@ -12,10 +12,9 @@ final class ProfilePresenterSpy: ProfilePresenterProtocol {
     var view: ProfileViewControllerProtocol?
     var viewDidloadCalled: Bool = false
     
-    func updateAvatar() {
-    }
+    func updateAvatar() {   }
     
-    func logout() { }
+    func logout() {   }
     
     func viewDidLoad() {
         viewDidloadCalled = true

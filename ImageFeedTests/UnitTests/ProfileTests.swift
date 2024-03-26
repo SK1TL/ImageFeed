@@ -9,7 +9,7 @@
 import XCTest
 
 final class ProfileTests: XCTestCase {
-
+    
     func testViewControllerCallsUpdateProfileDetailes() {
         let viewController = ProfileViewController()
         let presenter = ProfilePresenterSpy()
@@ -22,12 +22,13 @@ final class ProfileTests: XCTestCase {
     }
     
     func testSwitchToSplashScreen() {
+        
         let logoutHelper = LogoutHelper()
         let presenter = ProfilePresenter(logoutHelper: logoutHelper)
         guard let window = UIApplication.shared.windows.first else { fatalError("Invalid Configuration") }
         
         presenter.logout()
-    
+        
         XCTAssert(window.rootViewController is SplashViewController)
     }
 }
