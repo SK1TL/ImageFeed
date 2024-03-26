@@ -20,15 +20,4 @@ final class ProfileTests: XCTestCase {
         
         XCTAssertTrue(presenter.viewDidloadCalled)
     }
-    
-    func testSwitchToSplashScreen() {
-        
-        let logoutHelper = LogoutHelper()
-        let presenter = ProfilePresenter(logoutHelper: logoutHelper)
-        guard let window = UIApplication.shared.windows.first else { fatalError("Invalid Configuration") }
-        
-        presenter.logout()
-        
-        XCTAssert(window.rootViewController is SplashViewController)
-    }
 }

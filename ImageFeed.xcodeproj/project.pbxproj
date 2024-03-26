@@ -361,8 +361,8 @@
 			children = (
 				856C34A62BADCA2900409124 /* WebViewPresenterSpy.swift */,
 				856C34AA2BADD6C700409124 /* WebViewViewControllerSpy.swift */,
-				856C34C42BB2007900409124 /* ProfilePresenterSpy.swift */,
 				856C34C62BB2008C00409124 /* ImagesListPresenterSpy.swift */,
+				856C34C42BB2007900409124 /* ProfilePresenterSpy.swift */,
 			);
 			path = Spies;
 			sourceTree = "<group>";
