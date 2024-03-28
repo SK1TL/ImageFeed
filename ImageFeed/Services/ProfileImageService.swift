@@ -13,7 +13,7 @@ final class ProfileImageService {
     static let shared = ProfileImageService()
     
     private let urlSession = URLSession.shared
-    private (set) var avatarURL: String = ""
+    private (set) var avatarURL: String?
     private var task: URLSessionTask?
     
     private init() {}

@@ -25,7 +25,7 @@ final class AlertPresenter: AlertPresenterProtocol {
             title: model.buttonText,
             style: .default
         ) { _ in
-            model.completion(model.error)
+            model.completion?(model.error)
         }
         
         alert.addAction(alertAction)

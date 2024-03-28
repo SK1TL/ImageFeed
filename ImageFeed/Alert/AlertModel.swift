@@ -7,10 +7,10 @@
 
 import Foundation
 
-struct AlertModel {
+public struct AlertModel {
     let title: String
     let message: String
     let buttonText: String
     let error: ProblemType?
-    let completion: (ProblemType?) -> Void
+    let completion: ((ProblemType?) -> Void)?
 }
