@@ -63,7 +63,7 @@ final class ProfileViewController: UIViewController, ProfileViewControllerProtoc
         button.addTarget(self, action: #selector(didTapLogoutButton), for: .touchUpInside)
         button.tintColor = .red
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.accessibilityIdentifier = "logout button"
+        button.accessibilityIdentifier = "logoutButton"
         return button
     }()
     
