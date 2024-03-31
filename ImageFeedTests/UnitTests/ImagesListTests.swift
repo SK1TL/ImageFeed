@@ -9,6 +9,7 @@
 import XCTest
 
 final class ImagesListTests: XCTestCase {
+    
     func testViewControllerCallsFetchPhotosNextPage() {
         
         // given

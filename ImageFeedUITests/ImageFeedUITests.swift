@@ -8,6 +8,7 @@
 import XCTest
 
 final class Image_FeedUITests: XCTestCase {
+   
     private let app = XCUIApplication()
     
     enum TestConstants {
@@ -51,31 +52,28 @@ final class Image_FeedUITests: XCTestCase {
         webView.buttons["Login"].tap()
         
         let tablesQuery = app.tables
-        let cell = tablesQuery.children(matching: .cell).element(boundBy: 0)
+        let cell = tablesQuery.descendants(matching: .cell).element(boundBy: 0)
         XCTAssertTrue(cell.waitForExistence(timeout: 15))
         sleep(2)
     }
     
     func testFeed() throws {
-        
         let tablesQuery = app.tables
-        let cell = tablesQuery.children(matching: .cell).element(boundBy: 0)
+        let cell = tablesQuery.descendants(matching: .cell).element(boundBy: 0)
         XCTAssertTrue(cell.waitForExistence(timeout: 10))
-        sleep(2)
+        sleep(3)
         
         cell.swipeUp()
+        sleep(2)
         
-        sleep(1)
+        let cellToLike = tablesQuery.descendants(matching: .cell).element(boundBy: 1)
         
-        let cellToLike = tablesQuery.children(matching: .cell).element(boundBy: 1)
         cellToLike.buttons["likeButton"].tap()
         sleep(2)
         cellToLike.buttons["likeButton"].tap()
-        
         sleep(2)
         
         cellToLike.tap()
-        
         sleep(2)
         
         let image = app.scrollViews.images.element(boundBy: 0)

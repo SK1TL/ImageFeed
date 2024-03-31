@@ -12,10 +12,10 @@ public struct Profile {
     let firstName: String
     let lastName: String
     var name: String {
-        return firstName + " " + lastName
+        firstName + " " + lastName
     }
     var loginName: String {
-        return "@" + userName
+        "@" + userName
     }
     var bio: String
 }

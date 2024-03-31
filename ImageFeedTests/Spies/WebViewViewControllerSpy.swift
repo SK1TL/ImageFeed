@@ -9,6 +9,7 @@ import Foundation
 import ImageFeed
 
 final class WebViewViewControllerSpy: WebViewViewControllerProtocol {
+    
     var viewDidLoadRequest = false
     var presenter: WebViewPresenterProtocol?
     
@@ -16,9 +17,7 @@ final class WebViewViewControllerSpy: WebViewViewControllerProtocol {
         viewDidLoadRequest = true
     }
     
-    func setProgressValue(_ newValue: Float) {   }
+    func setProgressValue(_ newValue: Float) {}
     
-    func setProgressHidden(_ isHidden: Bool) {   }
-    
-    
+    func setProgressHidden(_ isHidden: Bool) {}
 }

@@ -9,7 +9,8 @@ import Foundation
 import ImageFeed
 
 final class ImagesListPresenterSpy: ImagesListPresenterProtocol {
-    var fetchPhotosNextPageCalled: Bool = false
+    
+    var fetchPhotosNextPageCalled = false
     var view: ImagesListViewControllerProtocol?
     
     var photos: [Photo] = []
@@ -18,9 +19,9 @@ final class ImagesListPresenterSpy: ImagesListPresenterProtocol {
         fetchPhotosNextPageCalled = true
     }
     
-    func updateTableViewAnimated() {   }
+    func updateTableViewAnimated() {}
     
-    func changeLike(indexPath: IndexPath) {   }
+    func changeLike(indexPath: IndexPath) {}
     
-    func setupNotificationObserver() {   }
+    func setupNotificationObserver() {}
 }

@@ -6,15 +6,15 @@
 //
 
 import ImageFeed
-import Foundation
 
 final class ProfilePresenterSpy: ProfilePresenterProtocol {
+    
     var view: ProfileViewControllerProtocol?
-    var viewDidloadCalled: Bool = false
+    var viewDidloadCalled = false
     
-    func updateAvatar() {   }
+    func updateAvatar() {}
     
-    func logout() {   }
+    func logout() {}
     
     func viewDidLoad() {
         viewDidloadCalled = true

@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 final class ImagesListService {
     
     static let shared = ImagesListService()
@@ -83,7 +82,7 @@ extension ImagesListService {
         var request = URLRequest.makeHTTPRequest(
             path: "/photos?page=\(page)",
             httpMethod: "GET",
-            baseURL: Constants.defaultBaseURL.rawValue
+            baseURL: AuthConfiguration.standard.defaultBaseURL
         )
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         
@@ -94,7 +93,7 @@ extension ImagesListService {
         var request = URLRequest.makeHTTPRequest(
             path: "/photos/\(photoId)/like",
             httpMethod: isLike ? "DELETE" : "POST",
-            baseURL: Constants.defaultBaseURL.rawValue
+            baseURL: AuthConfiguration.standard.defaultBaseURL
         )
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         

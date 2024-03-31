@@ -8,6 +8,7 @@
 import Foundation
 
 extension URLSession {
+    
     enum NetworkErrors: Error {
         case invalidUrl
         case httpStatusCode(Int)

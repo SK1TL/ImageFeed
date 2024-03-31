@@ -221,7 +221,7 @@
 				851A0B872B5BE24B003E6D97 /* SingleImageViewController */,
 				851A0B5F2B4AD3AB003E6D97 /* ImagesList */,
 				853126DA2B7265DF008589D5 /* Auth */,
-				853127862B754E6E008589D5 /* Constants */,
+				853127862B754E6E008589D5 /* AuthConfiguration */,
 				851A0B292B432371003E6D97 /* AppDelegate.swift */,
 				851A0B2B2B432371003E6D97 /* SceneDelegate.swift */,
 				851A0B342B43237C003E6D97 /* LaunchScreen.storyboard */,
@@ -268,12 +268,12 @@
 			path = Auth;
 			sourceTree = "<group>";
 		};
-		853127862B754E6E008589D5 /* Constants */ = {
+		853127862B754E6E008589D5 /* AuthConfiguration */ = {
 			isa = PBXGroup;
 			children = (
 				853126D62B7147E7008589D5 /* AuthConfiguration.swift */,
 			);
-			path = Constants;
+			path = AuthConfiguration;
 			sourceTree = "<group>";
 		};
 		853127872B754F03008589D5 /* OAuth2 */ = {
