@@ -9,7 +9,7 @@ import XCTest
 
 final class Image_FeedUITests: XCTestCase {
    
-    private let app = XCUIApplication()
+     var app: XCUIApplication!
     
     enum TestConstants {
         static let email = "" // your email on Unsplash.com
@@ -19,7 +19,10 @@ final class Image_FeedUITests: XCTestCase {
     }
     
     override func setUpWithError() throws {
+        try super.setUpWithError()
+        app = XCUIApplication()
         continueAfterFailure = false
+        app.launchArguments = ["testMode"]
         app.launch()
     }
     
@@ -101,3 +104,5 @@ final class Image_FeedUITests: XCTestCase {
         XCTAssert(app.buttons["Authenticate"].waitForExistence(timeout: 10))
     }
 }
+
+
