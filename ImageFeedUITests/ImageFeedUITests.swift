@@ -12,10 +12,10 @@ final class Image_FeedUITests: XCTestCase {
     private let app = XCUIApplication()
     
     enum TestConstants {
-        static let email = "SSSK1TLLL@yandex.ru" // your email on Unsplash.com
-        static let password = "Rde696a1" // your password from Unsplash.com
-        static let name = "Artur Gaifullin" // your full name on Unsplash.com
-        static let userName = "@sk1tl" // your userName on Unsplash.com
+        static let email = "" // your email on Unsplash.com
+        static let password = "" // your password from Unsplash.com
+        static let name = "" // your full name on Unsplash.com
+        static let userName = "" // your userName on Unsplash.com
     }
     
     override func setUpWithError() throws {
