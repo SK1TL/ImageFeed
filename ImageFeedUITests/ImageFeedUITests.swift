@@ -12,10 +12,10 @@ final class Image_FeedUITests: XCTestCase {
     private let app = XCUIApplication()
     
     enum TestConstants {
-        static let email = "" // your email on Unsplash.com
-        static let password = "" // your password from Unsplash.com
-        static let name = "" // your full name on Unsplash.com
-        static let userName = "" // your userName on Unsplash.com
+        static let email = "SSSK1TLLL@yandex.ru" // your email on Unsplash.com
+        static let password = "Rde696a1" // your password from Unsplash.com
+        static let name = "Artur Gaifullin" // your full name on Unsplash.com
+        static let userName = "@sk1tl" // your userName on Unsplash.com
     }
     
     override func setUpWithError() throws {
@@ -64,17 +64,17 @@ final class Image_FeedUITests: XCTestCase {
         sleep(3)
         
         cell.swipeUp()
-        sleep(2)
+        sleep(3)
         
         let cellToLike = tablesQuery.descendants(matching: .cell).element(boundBy: 1)
         
         cellToLike.buttons["likeButton"].tap()
-        sleep(2)
+        sleep(3)
         cellToLike.buttons["likeButton"].tap()
-        sleep(2)
+        sleep(3)
         
         cellToLike.tap()
-        sleep(2)
+        sleep(5)
         
         let image = app.scrollViews.images.element(boundBy: 0)
         image.pinch(withScale: 3, velocity: 1)
