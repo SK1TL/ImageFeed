@@ -11,7 +11,7 @@ extension URLRequest {
     static func makeHTTPRequest(
         path: String,
         httpMethod: String,
-        baseURL: String = Constants.defaultBaseURL.rawValue
+        baseURL: String = AuthConfiguration.standard.defaultBaseURL
     ) -> URLRequest {
         guard
             let baseURL = URL(string: baseURL),

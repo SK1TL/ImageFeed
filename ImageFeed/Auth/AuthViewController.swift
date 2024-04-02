@@ -23,6 +23,7 @@ final class AuthViewController: UIViewController {
         button.setTitleColor(.ypBlack, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.accessibilityIdentifier = "Authenticate"
         return button
     }()
     
@@ -63,9 +64,13 @@ final class AuthViewController: UIViewController {
     }
     
     @objc private func didTapLoginButton() {
-        let webViewVC = WebViewViewController()
-        webViewVC.delegate = self
-        navigationController?.pushViewController(webViewVC, animated: true)
+        let webViewViewController = WebViewViewController()
+        let authHelper = AuthHelper()
+        let webViewPresenter = WebViewPresenter(authHelper: authHelper)
+        webViewViewController.presenter = webViewPresenter
+        webViewPresenter.view = webViewViewController
+        webViewViewController.delegate = self
+        navigationController?.pushViewController(webViewViewController, animated: true)
     }
 }
 

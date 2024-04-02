@@ -13,12 +13,20 @@ protocol WebViewViewControllerDelegate: AnyObject {
     func webViewViewControllerDidCancel(_ vc: WebViewViewController)
 }
 
-final class WebViewViewController: UIViewController {
+public protocol WebViewViewControllerProtocol: AnyObject {
+    var presenter: WebViewPresenterProtocol? { get set }
+    func load(request: URLRequest)
+    func setProgressValue(_ newValue: Float)
+    func setProgressHidden(_ isHidden: Bool)
+}
+
+final class WebViewViewController: UIViewController & WebViewViewControllerProtocol {
     
     private lazy var authWebView: WKWebView = {
         let webView = WKWebView()
         webView.navigationDelegate = self
         webView.translatesAutoresizingMaskIntoConstraints = false
+        webView.accessibilityIdentifier = "UnsplashWebView"
         return webView
     }()
     
@@ -33,6 +41,7 @@ final class WebViewViewController: UIViewController {
     private var estimatedProgressObservation: NSKeyValueObservation?
     
     weak var delegate: WebViewViewControllerDelegate?
+    var presenter: WebViewPresenterProtocol?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,25 +51,14 @@ final class WebViewViewController: UIViewController {
         addSubviews()
         makeConstraints()
         
-        guard var urlComponents = URLComponents(string: Constants.unsplashAuthorizeURLString.rawValue) else { return }
-        urlComponents.queryItems = [
-            URLQueryItem(name: "client_id", value: Constants.accessKey.rawValue),
-            URLQueryItem(name: "redirect_uri", value: Constants.redirectURI.rawValue),
-            URLQueryItem(name: "response_type", value: "code"),
-            URLQueryItem(name: "scope", value: Constants.accessScope.rawValue)
-        ]
-        
-        guard let url = urlComponents.url else { return }
-        
-        let request = URLRequest(url: url)
-        authWebView.load(request)
+        presenter?.viewDidLoad()
         
         estimatedProgressObservation = authWebView.observe(
             \.estimatedProgress,
              options: [],
              changeHandler: { [weak self] _, _ in
                  guard let self else { return }
-                 self.updateProgress()
+                 presenter?.didUpdateProgressValue(authWebView.estimatedProgress)
              }
         )
     }
@@ -72,10 +70,14 @@ final class WebViewViewController: UIViewController {
         context: UnsafeMutableRawPointer?
     ) {
         if keyPath == #keyPath(WKWebView.estimatedProgress) {
-            updateProgress()
+            presenter?.didUpdateProgressValue(authWebView.estimatedProgress)
         } else {
             super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
         }
+    }
+    
+    func load(request: URLRequest) {
+        authWebView.load(request)
     }
     
     private func setupNavigationBar() {
@@ -108,9 +110,12 @@ final class WebViewViewController: UIViewController {
         ])
     }
     
-    private func updateProgress() {
-        progressView.progress = Float(authWebView.estimatedProgress)
-        progressView.isHidden = fabs(authWebView.estimatedProgress - 1.0) <= 0.0001
+    func setProgressValue(_ newValue: Float) {
+        progressView.progress = newValue
+    }
+    
+    func setProgressHidden(_ isHidden: Bool) {
+        progressView.isHidden = isHidden
     }
     
     @objc private func didTapBackButton() {
@@ -133,16 +138,9 @@ extension WebViewViewController: WKNavigationDelegate {
     }
     
     private func code(from navigationAction: WKNavigationAction) -> String? {
-        if
-            let url = navigationAction.request.url,
-            let urlComponents = URLComponents(string: url.absoluteString),
-            urlComponents.path == "/oauth/authorize/native",
-            let items = urlComponents.queryItems,
-            let codeItem = items.first(where: { $0.name == "code" })
-        {
-            return codeItem.value
-        } else {
-            return nil
+        if let url = navigationAction.request.url {
+            return presenter?.code(from: url)
         }
+        return nil
     }
 }

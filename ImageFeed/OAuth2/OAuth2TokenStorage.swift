@@ -13,20 +13,21 @@ final class OAuth2TokenStorage {
     static let shared = OAuth2TokenStorage()
     
     private let key = "token"
+    private let keychainWrapper = KeychainWrapper.standard
     
     var token: String? {
         get {
-            return KeychainWrapper.standard.string(forKey: key)
+            return keychainWrapper.string(forKey: key)
         }
         set {
             guard let newValue else { return }
-            KeychainWrapper.standard.set(newValue, forKey: key)
+            keychainWrapper.set(newValue, forKey: key)
         }
     }
     
     private init() {}
     
     func removeToken() -> Bool {
-        KeychainWrapper.standard.removeObject(forKey: key)
+        keychainWrapper.removeObject(forKey: key)
     }
 }

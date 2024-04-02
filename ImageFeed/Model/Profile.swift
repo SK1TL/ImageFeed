@@ -7,15 +7,15 @@
 
 import Foundation
 
-struct Profile {
+public struct Profile {
     let userName: String
     let firstName: String
     let lastName: String
     var name: String {
-        return firstName + " " + lastName
+        firstName + " " + lastName
     }
     var loginName: String {
-        return "@" + userName
+        "@" + userName
     }
     var bio: String
 }
